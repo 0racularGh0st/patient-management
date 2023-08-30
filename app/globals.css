@@ -8,6 +8,7 @@
   --background-end-rgb: 255, 255, 255;
   --brand-01: #38abab;
   --brand-02: #214f4f;
+  --text-color: #173c37;
 }
 
 @media (prefers-color-scheme: light) {
@@ -19,7 +20,7 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
+  color: rgb(var(--text-color));
   background: white;
 }
 
@@ -28,4 +29,13 @@ body {
 }
 .bg_secondary {
   background-color: var(--brand-02);
+}
+.text_main {
+  color: var(--text-color);
+}
+.text_primary {
+  color: var(--brand-01);
+}
+.text_secondary {
+  color: var(--brand-02);
 }

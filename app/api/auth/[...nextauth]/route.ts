@@ -9,26 +9,32 @@ const handler: NextAuthOptions = NextAuth({
             clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
         })
     ],
-    async session({ session }: { session: any }) {
-        const sessionUser = await User.findOne({ email: session.user.email });
-
-        session.user.id = sessionUser._id.toString();
-
-        return session;
-    },
-    async signIn({ profile }: { profile: any}) {
-        try {
-            await connectToDB();
-            const userExists = await User.findOne({ email: profile.email })
-
-            if (!userExists) {
-                await User.create({ email: profile.name, username: profile.name.replace(' ', '').toLowerCase()})
+    callbacks: {
+        async session({ session }: { session: any }) {
+            const sessionUser = await User.findOne({ email: session.user.email });
+    
+            session.user.id = sessionUser._id.toString();
+    
+            return session;
+        },
+        async signIn({ profile }) {
+            try {
+                const allowedUsers = process.env.ALLOWED_USERS?.split(',');
+                if (!allowedUsers?.includes(profile?.email?.toLowerCase() || '')) {
+                    return false;
+                }
+                await connectToDB();
+                const userExists = await User.findOne({ email: profile?.email || '' })
+    
+                if (!userExists) {
+                    await User.create({ email: profile?.email, username: profile?.name?.replace(' ', '').toLowerCase()})
+                }
+                return true;
             }
-            return true;
-        }
-        catch (error) {
-            console.log(error)
-            return false;
+            catch (error) {
+                console.log(error)
+                return false;
+            }
         }
     }
 })
