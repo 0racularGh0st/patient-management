@@ -6,6 +6,8 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --brand-01: #38abab;
+  --brand-02: #214f4f;
 }
 
 @media (prefers-color-scheme: light) {
@@ -19,4 +21,11 @@
 body {
   color: rgb(var(--foreground-rgb));
   background: white;
+}
+
+.bg_primary {
+  background-color: var(--brand-01);
+}
+.bg_secondary {
+  background-color: var(--brand-02);
 }
