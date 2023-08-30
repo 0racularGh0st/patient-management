@@ -8,7 +8,7 @@ import { ContentLayout } from '@components/contentLayout'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Patient Management',
+  title: 'Patient Manager',
   description: 'Developed by Nigel Tariang',
 }
 
@@ -21,7 +21,6 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <main>
-          <section className='glass'></section>
           <AuthProvider>
             <Nav />
             <ContentLayout>
@@ -30,8 +29,8 @@ export default function RootLayout({
           </AuthProvider>
         </main>
         <div className='circle1'/>
-
         <div className='circle2'/>
+        <div className='circle3'/>
       </body>
     </html>
   )

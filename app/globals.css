@@ -9,6 +9,7 @@
   --brand-01: #38abab;
   --brand-02: #214f4f;
   --text-color: #173c37;
+  --glass-text: #426696;
 }
 
 @media (prefers-color-scheme: light) {
@@ -38,4 +39,58 @@ body {
 }
 .text_secondary {
   color: var(--brand-02);
+}
+.text_on_glass {
+  color: var(--glass-text);
+}
+main {
+  min-height: 100vh;
+  background: linear-gradient(to right top, #65dfc9, #6cdbeb)
+}
+.glass{
+  background: white;
+  min-height: 60vh;
+  width: 400px;
+  max-width: 100%;
+  background: linear-gradient(to right bottom, rgba(255,255,255,0.7),rgba(255,255,255,0.3));
+  border-radius: 2rem;
+  z-index: 2;
+  backdrop-filter: blur(16px);
+}
+.circle1, .circle2, .circle3 {
+  background: white;
+  background: linear-gradient(to right bottom, rgba(255,255,255,0.8),rgba(255,255,255,0.3));
+  border-radius: 50%;
+  position: absolute;
+  opacity: 0.85;
+}
+
+.circle1{
+  top: 11%;
+  right: 15%;
+  height: 15rem;
+  width: 15rem;
+}
+.circle2{
+  bottom: 25%;
+  left: 5%;
+  height: 20rem;
+  width: 20rem;
+}
+.circle3{
+  bottom: 15%;
+  right: 5%;
+  height: 10rem;
+  width: 10rem;
+}
+.card_on_glass{
+  background: linear-gradient(to left top, rgba(255,255,255, 0.8), rgba(255,255,255,0.3));
+  border-radius: 1rem;
+  box-shadow: 6px 6px 20px rgba(122, 122,122, 0.2);
+}
+.glass_effect{
+  background: white;
+  background: linear-gradient(to right bottom, rgba(255,255,255,0.7),rgba(255,255,255,0.3));
+  border-radius: 2rem;
+  backdrop-filter: blur(16px);
 }

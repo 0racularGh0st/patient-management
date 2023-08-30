@@ -7,7 +7,7 @@ const Dashboard = () => {
         className='flex justify-center items-center gap-2 shadow-md hover:shadow-xl transition duration-400 rounded-full px-4 py-2'
         >
             <UserPlusIcon width={30} height={30} className='text_primary'/>
-            <span className='text_primary'>Add patient</span>
+            <span className='text_secondary'>Add patient</span>
         </button>
     </div>
   )

@@ -42,7 +42,7 @@ export const Nav = () => {
   }, [status, session, router])
 
   return (
-    <nav className='flex justify-between items-center gap-4 w-full py-4 px-3 sm:px-8 bg-white backdrop-blur sticky top-0 shadow'>
+    <nav className='flex justify-between items-center gap-4 w-full py-4 px-3 sm:px-8 backdrop-blur sticky top-0'>
       <Link
         href='/dashboard'
         className='flex justify-center items-center gap-4'
@@ -52,7 +52,8 @@ export const Nav = () => {
           alt="Logo"
           height={40}
           width={110}
-          style={{ minHeight: '40px', minWidth: '110px'}}
+          style={{ minHeight: '40px', minWidth: '110px', boxShadow: '1px 3px 7px 0px #183c37'}}
+          className='px-3 py-1 bg-white rounded-full'
         />
       </Link>
       {!session?.user ?
@@ -60,11 +61,11 @@ export const Nav = () => {
         { status !== 'loading' && providers && Object.values(providers).map((provider: any) => (
           <button
           type="button"
-          className='px-5 rounded-full h-8 hover:bg-slate-200 font-normal text-base flex justify-center items-center gap-3 transition-colors'
+          className='glass_effect px-5 rounded-full h-8 hover:backdrop-blur-lg hover:bg-white font-normal text-base flex justify-center items-center gap-3 transition-colors'
           key={provider.name}
           onClick={() => signIn(provider.id)}
          >
-            <span  className='text-slate-800'>
+            <span  className='text-slate-800 text_main'>
               Sign in with
             </span>
             <Image
