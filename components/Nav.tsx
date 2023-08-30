@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation';
 import { useState, useEffect, Fragment } from 'react'
 import Logo from '@assets/images/patientmgmt.png'
+import GoogleIcon from '../assets/icons/google.svg'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon, ArrowLeftOnRectangleIcon, UserCircleIcon } from '@heroicons/react/20/solid'
 import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
@@ -41,9 +42,9 @@ export const Nav = () => {
   }, [status, session, router])
 
   return (
-    <nav className='flex justify-between items-center gap-4 w-full py-4 px-8 bg-white backdrop-blur'>
+    <nav className='flex justify-between items-center gap-4 w-full py-4 px-3 sm:px-8 bg-white backdrop-blur sticky top-0 shadow'>
       <Link
-        href='/'
+        href='/dashboard'
         className='flex justify-center items-center gap-4'
       >
         <Image
@@ -59,11 +60,17 @@ export const Nav = () => {
         { status !== 'loading' && providers && Object.values(providers).map((provider: any) => (
           <button
           type="button"
-          className='bg_primary px-5 rounded-full h-8 text-cyan-50 hover:opacity-90 font-normal text-base'
+          className='px-5 rounded-full h-8 hover:bg-slate-200 font-normal text-base flex justify-center items-center gap-3 transition-colors'
           key={provider.name}
           onClick={() => signIn(provider.id)}
          >
-            Sign in
+            <span  className='text-slate-800'>
+              Sign in with
+            </span>
+            <Image
+              src={GoogleIcon}
+              alt='google'
+            />
           </button>
         ))}
         { status === 'loading' && <Spinner />}

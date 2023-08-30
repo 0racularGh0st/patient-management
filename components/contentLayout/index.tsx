@@ -5,7 +5,7 @@ type ContentLayoutProps = {
 
 export const ContentLayout = ({ children }: ContentLayoutProps) => {
   return (
-    <div className="flex justify-center items-center px-6 sm:px-8 h-screen">
+    <div className="flex justify-center items-center px-3 sm:px-8 h-screen">
       {children}
     </div>
   )

@@ -20,12 +20,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <AuthProvider>
-          <Nav />
-          <ContentLayout>
-            {children}
-          </ContentLayout>
-        </AuthProvider>
+        <main>
+          <section className='glass'></section>
+          <AuthProvider>
+            <Nav />
+            <ContentLayout>
+              {children}
+            </ContentLayout>
+          </AuthProvider>
+        </main>
+        <div className='circle1'/>
+
+        <div className='circle2'/>
       </body>
     </html>
   )
