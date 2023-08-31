@@ -2,7 +2,7 @@ import Image from "next/image";
 import Logo from '@assets/images/patientmgmt.png'
 const Home = () => {
   return (
-    <section className='glass flex flex-col justify-between items-center px-6 py-8'>
+    <section className='glass w-full sm:w-[80%] flex flex-col justify-between items-center px-6 py-8'>
         
         <Image
           src={Logo}

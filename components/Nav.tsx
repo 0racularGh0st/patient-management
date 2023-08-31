@@ -79,7 +79,7 @@ export const Nav = () => {
         : 
         (<Menu as="div" className="relative inline-block text-left">
           <div>
-            <Menu.Button className="rounded-full hover:bg-slate-100 transition-colors py-1 px-4">
+            <Menu.Button className="glass_effect rounded-full hover:bg-slate-100 transition-colors py-1 px-4">
             <div
               className='flex justify-center items-center gap-2'
             >
