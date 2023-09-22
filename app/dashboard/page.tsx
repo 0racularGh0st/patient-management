@@ -5,7 +5,7 @@ import { UserPlusIcon } from '@heroicons/react/20/solid'
 import SearchBar from '@components/searchBar'
 import ListByName from '@components/ListByName'
 const Dashboard = () => {
-  let [isOpen, setIsOpen] = useState(true)
+  let [isOpen, setIsOpen] = useState(false)
 
   function closeModal() {
     setIsOpen(false)

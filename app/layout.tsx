@@ -1,11 +1,11 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Quicksand } from 'next/font/google'
 import Nav from '@components/Nav'
 import AuthProvider from '@utils/authProvider'
 import { ContentLayout } from '@components/contentLayout'
 
-const inter = Inter({ subsets: ['latin'] })
+const quicksand = Quicksand({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Patient Manager',
@@ -19,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={quicksand.className}>
         <main>
         <div className='background-elements'>
           <div className='circle1'/>

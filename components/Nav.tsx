@@ -52,7 +52,7 @@ export const Nav = () => {
           alt="Logo"
           height={40}
           width={110}
-          style={{ minHeight: '40px', minWidth: '110px', boxShadow: '1px 3px 7px 0px #183c37'}}
+          style={{ minHeight: '40px', minWidth: '110px'}}
           className='px-3 py-1 bg-white rounded-full'
         />
       </Link>
@@ -65,7 +65,7 @@ export const Nav = () => {
           key={provider.name}
           onClick={() => signIn(provider.id)}
          >
-            <span  className='text-slate-800 text_on_glass'>
+            <span  className='text-slate-800 text_on_glass font-semibold'>
               Sign in with
             </span>
             <Image
