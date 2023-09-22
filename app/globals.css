@@ -8,6 +8,7 @@
   --background-end-rgb: 255, 255, 255;
   --brand-01: #38abab;
   --brand-02: #214f4f;
+  --brand-03: #D264F7;
   --text-color: #173c37;
   --glass-text: #426696;
 }
@@ -45,7 +46,27 @@ body {
 }
 main {
   min-height: 100vh;
-  background: linear-gradient(to right top, #65dfc9, #6cdbeb)
+  z-index: 1;
+}
+.background-elements {
+  z-index: -1;
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+}
+.background-back{
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  background: white;
+  height: 100vh;
+  width: 100vw;
+  background: linear-gradient(to right bottom, rgba(255,255,255,0.7),rgba(255,255,255,0.3));
+  backdrop-filter: blur(100px);
+  z-index: 0;
 }
 .glass{
   background: white;
@@ -56,32 +77,106 @@ main {
   z-index: 2;
   backdrop-filter: blur(16px);
 }
-.circle1, .circle2, .circle3 {
-  background: white;
+.circle1, .circle2, .circle3, .circle5, .circle6, .circle4 {
   background: linear-gradient(to right bottom, rgba(255,255,255,0.8),rgba(255,255,255,0.3));
   border-radius: 50%;
   position: absolute;
   opacity: 0.85;
   pointer-events: none;
+  z-index: 0;
+  opacity: 0.7;
+  transform: translate3d(0px, 0px, 0px) scale(1);
 }
-
+@keyframes pulse1 {
+    0% {
+        transform: translate3d(0px, 0px, 0px) scale(1);
+    }
+    30% {
+        transform: translate3d(30px, 100px, 0px) scale(1.2) ;
+    }
+    60% {
+      transform: translate3d(-200px, -150px, 0px) scale(0.8) ;
+    }
+    100% {
+      transform: translate3d(0px, 0px, 0px) scale(1);
+    }
+}
+@keyframes pulse2 {
+  0% {
+      transform: translate3d(0px, 0px, 0px) scale(1);
+  }
+  30% {
+      transform: translate3d(-200px, -90px, 0px) scale(1.2) ;
+  }
+  60% {
+    transform: translate3d(90px, 80px, 0px) scale(0.8) ;
+  }
+  100% {
+    transform: translate3d(0px, 0px, 0px) scale(1);
+  }
+}
+@keyframes pulse3 {
+  0% {
+      transform: translate3d(0px, 0px, 0px) scale(1);
+  }
+  30% {
+      transform: translate3d(100px, 140px, 0px) scale(1.2) ;
+  }
+  60% {
+    transform: translate3d(-140px, 200px, 0px) scale(0.8) ;
+  }
+  100% {
+    transform: translate3d(0px, 0px, 0px) scale(1);
+  }
+}
 .circle1{
   top: 11%;
   right: 15%;
   height: 15rem;
   width: 15rem;
+  background: var(--brand-01);
+  animation: pulse1 5s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
 }
 .circle2{
   bottom: 25%;
   left: 5%;
   height: 20rem;
   width: 20rem;
+  background: var(--brand-02);
+  animation: pulse2 5s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
 }
 .circle3{
   bottom: 15%;
   right: 5%;
   height: 10rem;
   width: 10rem;
+  background: var(--brand-03);
+  animation: pulse1 5s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+}
+.circle6{
+  bottom: 11%;
+  left: 47%;
+  height: 10rem;
+  width: 10rem;
+  background: var(--brand-01);
+  animation: pulse3 5s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+}
+
+.circle4{
+  bottom: -3%;
+  right: -3%;
+  height: 10rem;
+  width: 10rem;
+  background: var(--brand-02);
+  animation: pulse2 5s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+}
+.circle5{
+  top: 11%;
+  left: 18%;
+  height: 11rem;
+  width: 12rem;
+  background: var(--brand-03);
+  animation: pulse2 5s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
 }
 .card_on_glass{
   background: linear-gradient(to left top, rgba(255,255,255, 0.3), rgba(255,255,255,0.5));
@@ -111,5 +206,5 @@ main {
 }
 .letter_box:hover{
   border-radius: 6px !important;
-  box-shadow: 0px 4px 7px 3px rgb(210 100 247 / 29%);
+  box-shadow: 0px 4px 7px 3px #d264f74a;
 }

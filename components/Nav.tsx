@@ -65,7 +65,7 @@ export const Nav = () => {
           key={provider.name}
           onClick={() => signIn(provider.id)}
          >
-            <span  className='text-slate-800 text_main'>
+            <span  className='text-slate-800 text_on_glass'>
               Sign in with
             </span>
             <Image

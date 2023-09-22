@@ -12,7 +12,7 @@ const SearchBar = () => {
             className="text_on_glass peer h-full w-full outline-none text-sm text-gray-700 pr-2 bg-transparent"
             type="text"
             id="search"
-            placeholder="Search patient by name..." /> 
+            placeholder="Search by name..." /> 
         </div>
     </div>
   )

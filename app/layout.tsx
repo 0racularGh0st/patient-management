@@ -21,6 +21,15 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <main>
+        <div className='background-elements'>
+          <div className='circle1'/>
+          <div className='circle2'/>
+          <div className='circle3'/>
+          <div className='circle4'/>
+          <div className='circle5'/>
+          <div className='circle6'/>
+          <div className='background-back'/>
+        </div>
           <AuthProvider>
             <Nav />
             <ContentLayout>
@@ -28,9 +37,6 @@ export default function RootLayout({
             </ContentLayout>
           </AuthProvider>
         </main>
-        <div className='circle1'/>
-        <div className='circle2'/>
-        <div className='circle3'/>
       </body>
     </html>
   )
