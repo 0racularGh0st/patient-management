@@ -1,4 +1,4 @@
-import './globals.css'
+import './globals.scss'
 import type { Metadata } from 'next'
 import { Inter, Quicksand } from 'next/font/google'
 import Nav from '@components/Nav'

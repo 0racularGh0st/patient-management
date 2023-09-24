@@ -16,19 +16,19 @@ const Dashboard = () => {
   }
 
   return (
-    <>
-      <div className='glass w-full sm:w-[80%] p-4 sm:p-9 flex flex-col justify-center items-center gap-12 min-h-[400px]'>
+    <div>
+      <div className='sm:w-[90%] p-4 sm:p-9 flex flex-col sm:flex-row sm:justify-center items-center sm:items-start gap-12 min-h-[400px] flex-wrap m-auto w-auto'>
         <button
         type='button'
-        className='card_on_glass flex justify-center w-72 hover:w-96 max-w-[100%] items-center gap-2 px-4 py-[9px] rounded-lg'
+        className='card_on_glass_effect flex justify-center w-72 items-center gap-2 px-4 py-[9px] rounded-lg max_mobile_element'
         onClick={() => setIsOpen(true)}
         >
             <UserPlusIcon width={30} height={30} className='text_primary'/>
-            <span className='text_on_glass'>Add patient</span>
+            <span className='text_on_glass_bold'>Add patient</span>
         </button>
         <SearchBar />
         <ListByName />
-    </div>
+      </div>
     <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
           <Transition.Child
@@ -83,7 +83,7 @@ const Dashboard = () => {
           </div>
         </Dialog>
       </Transition>
-    </>
+    </div>
   )
 }
 

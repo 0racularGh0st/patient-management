@@ -63,6 +63,10 @@ p {
 .text_on_glass {
   color: var(--glass-text);
 }
+.text_on_glass_bold {
+  color: var(--glass-text);
+  font-weight: 600;
+}
 main {
   min-height: 100vh;
   z-index: 1;
@@ -197,13 +201,13 @@ main {
   background: var(--brand-03);
   animation: pulse2 5s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
 }
-.card_on_glass{
+.card_on_glass_effect{
   background: linear-gradient(to left top, rgba(255,255,255, 0.3), rgba(255,255,255,0.5));
   border-radius: 1rem;
-  box-shadow: 6px 6px 20px rgba(122, 122,122, 0.2);
+  box-shadow: 0px 3px 11px rgba(122, 122, 122, 0.2);
   transition: all 0.3s ease-in-out;
 }
-.card_on_glass:hover{
+.card_on_glass_effect:hover{
   box-shadow: 0px 8px 30px 0px rgba(122, 122,122, 0.3);
 }
 .glass_effect{
@@ -225,8 +229,27 @@ main {
 }
 .letter_box:hover{
   border-radius: 6px !important;
-  box-shadow: 0px 4px 7px 3px #d264f74a;
+  box-shadow: 0px 2px 5px 0px rgba(210, 100, 247, 0.2901960784)
 }
 .text_wrap_balance{
   text-wrap: balance;
+}
+.letter-comp{
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  .letter-comp-content {
+    height: 0px;
+    margin-top: 0px;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+  }
+  &:hover {
+    .letter-comp-content {
+      height: 88px;
+      margin-top: 24px;
+    }
+  }
+}
+.max_mobile_element{
+  max-width: calc(100vw - 32px);
 }

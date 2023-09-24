@@ -58,23 +58,6 @@ export const Nav = () => {
       </Link>
       {!session?.user ?
        (<>
-        { status !== 'loading' && providers && Object.values(providers).map((provider: any) => (
-          <button
-          type="button"
-          className='glass_effect px-5 rounded-full h-8 hover:backdrop-blur-lg hover:bg-white font-normal text-base flex justify-center items-center gap-3 transition-colors'
-          key={provider.name}
-          onClick={() => signIn(provider.id)}
-         >
-            <span  className='text-slate-800 text_on_glass font-semibold'>
-              Sign in with
-            </span>
-            <Image
-              src={GoogleIcon}
-              alt='google'
-            />
-          </button>
-        ))}
-        { status === 'loading' && <Spinner />}
        </>)
         : 
         (<Menu as="div" className="relative inline-block text-left">
