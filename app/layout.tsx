@@ -4,7 +4,7 @@ import { Inter, Quicksand } from 'next/font/google'
 import Nav from '@components/Nav'
 import AuthProvider from '@utils/authProvider'
 import { ContentLayout } from '@components/contentLayout'
-
+import { ThemeProvider } from '@components/theme-provider'
 const quicksand = Quicksand({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -30,12 +30,14 @@ export default function RootLayout({
           <div className='circle6'/>
           <div className='background-back'/>
         </div>
-          <AuthProvider>
-            <Nav />
-            <ContentLayout>
-              {children}
-            </ContentLayout>
-          </AuthProvider>
+          <ThemeProvider attribute='class' defaultTheme="light">
+            <AuthProvider>
+              <Nav />
+              <ContentLayout>
+                {children}
+              </ContentLayout>
+            </AuthProvider>
+          </ThemeProvider>
         </main>
       </body>
     </html>

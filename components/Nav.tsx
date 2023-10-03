@@ -8,6 +8,7 @@ import GoogleIcon from '../assets/icons/google.svg'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon, ArrowLeftOnRectangleIcon, UserCircleIcon } from '@heroicons/react/20/solid'
 import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
+import { ModeToggle } from './ui/toggle-mode';
 export const Nav = () => {
   const { data: session, status } = useSession();
   const [providers, setProviders] = useState<any>(null);
@@ -43,20 +44,17 @@ export const Nav = () => {
 
   return (
     <nav className='flex justify-between items-center gap-4 w-full py-4 px-3 sm:px-8 backdrop-blur sticky top-0'>
-      <Link
-        href='/dashboard'
-        className='flex justify-center items-center gap-4'
-      >
-        <Image
-          src={Logo}
-          alt="Logo"
-          height={40}
-          width={110}
-          style={{ minHeight: '40px', minWidth: '110px'}}
-          className='px-3 py-1 bg-white rounded-full'
-        />
-      </Link>
-      {!session?.user ?
+    <Image
+      src={Logo}
+      alt="Logo"
+      height={40}
+      width={110}
+      style={{ minHeight: '40px', minWidth: '110px'}}
+      className='px-3 py-1 bg-white rounded-full'
+    />
+    <div className='flex justify-end items-center gap-4'>
+      <ModeToggle />
+    {!session?.user ?
        (<>
        </>)
         : 
@@ -104,6 +102,7 @@ export const Nav = () => {
           </Transition>
         </Menu>)
       }
+    </div>
     </nav>
   )
 }
