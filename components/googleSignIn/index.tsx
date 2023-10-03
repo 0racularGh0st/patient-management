@@ -2,7 +2,7 @@
 import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import GoogleIcon from '@assets/icons/google.svg'
-
+import { Button } from '@components/ui/button';
 import Image from 'next/image'
 
 
@@ -32,20 +32,20 @@ export const GoogleSignIn = () => {
         {!session?.user ?
        (<>
         { status !== 'loading' && providers && Object.values(providers).map((provider: any) => (
-          <button
+          <Button
           type="button"
-          className='glass_effect px-5 rounded-full h-8 hover:backdrop-blur-lg hover:bg-white font-normal text-base flex justify-center items-center gap-3 transition-colors w-fit'
           key={provider.name}
           onClick={() => signIn(provider.id)}
+          variant='outline'
          >
-            <span  className='text-slate-800 text_on_glass font-semibold'>
+            <span  className='mr-2'>
               Sign in with
             </span>
             <Image
               src={GoogleIcon}
               alt='google'
             />
-          </button>
+          </Button>
         ))}
         { status === 'loading' && <Spinner />}
        </>)
