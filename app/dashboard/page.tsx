@@ -17,7 +17,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      <div className='sm:w-[90%] p-4 sm:p-9 flex flex-col sm:flex-row sm:justify-center items-center sm:items-start gap-12 min-h-[400px] flex-wrap m-auto w-auto'>
+      <div className='p-4 sm:p-9 flex flex-col sm:flex-row sm:justify-center items-center sm:items-start gap-12 min-h-[400px] flex-wrap m-auto w-full'>
         <button
         type='button'
         className='card_on_glass_effect flex justify-center w-72 items-center gap-2 px-4 py-[9px] rounded-lg max_mobile_element'

@@ -64,7 +64,7 @@ p {
   color: var(--glass-text);
 }
 .text_on_glass_bold {
-  color: var(--glass-text);
+  color: var(--brand-01);
   font-weight: 600;
 }
 main {
@@ -202,13 +202,13 @@ main {
   animation: pulse2 5s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
 }
 .card_on_glass_effect{
-  background: linear-gradient(to left top, rgba(255,255,255, 0.3), rgba(255,255,255,0.5));
+  background: linear-gradient(to left top, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.5));
   border-radius: 1rem;
-  box-shadow: 0px 3px 11px rgba(122, 122, 122, 0.2);
+  box-shadow: 0px 0px 1px 1px rgb(56 171 171);
   transition: all 0.3s ease-in-out;
 }
 .card_on_glass_effect:hover{
-  box-shadow: 0px 8px 30px 0px rgba(122, 122,122, 0.3);
+  box-shadow: 1px 2px 13px 0px rgba(56, 171, 171, 0.3);
 }
 .glass_effect{
   background: white;
