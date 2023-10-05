@@ -1,7 +1,8 @@
 import { connectToDB } from "@utils/database";
 import NextAuth, { NextAuthOptions } from "next-auth";
-import GoogleProvider from 'next-auth/providers/google'
+import GoogleProvider from 'next-auth/providers/google';
 import User from "@models/user";
+
 const handler: NextAuthOptions = NextAuth({
     providers: [
         GoogleProvider({
@@ -39,4 +40,4 @@ const handler: NextAuthOptions = NextAuth({
     }
 })
 
-export { handler as GET, handler as POST }
+export { handler as GET, handler as POST };
