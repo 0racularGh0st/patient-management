@@ -22,7 +22,7 @@ const AddPatient = () => {
             <h4 className={typographyClass['h4']}>Add patient</h4>
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-[100%]" style={{ width : '800px' }}>
+      <DialogContent className="max-w-[calc(100%-32px)]" style={{ width : '800px' }}>
         <AddPatientForm setFormOpen={setFormOpen}/>
       </DialogContent>
     </Dialog>

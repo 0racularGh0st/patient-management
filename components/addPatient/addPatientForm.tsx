@@ -1,5 +1,5 @@
 "use client";
-import { Loader2 } from "lucide-react"
+import { Loader2, CheckCircle, UserX } from "lucide-react"
 import { Dispatch, SetStateAction, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -51,7 +51,7 @@ export const AddPatientForm = ({ setFormOpen }: { setFormOpen: Dispatch<SetState
         const dataWithDate: Patient = { ...data, dateOfVisit: new Date().toString()}
         if (status !== 'authenticated') {
             toast({
-                description: 'Please login again!',
+                description: <div className="flex justify-start items-center gap-2"><UserX className="text-red-500" /><p className={`${typographyClass['p']} font-semibold text-base`}>Logged out, redirecting to login...!</p></div>,
                 variant: "destructive",
                 duration: 2000,
             })
@@ -66,14 +66,14 @@ export const AddPatientForm = ({ setFormOpen }: { setFormOpen: Dispatch<SetState
             if (response.ok) {
                 setIsSubmitting(false);
                 toast({
-                    description: 'Patient has been created successfully!',
+                    description: <div className="flex justify-start items-center gap-2"><CheckCircle className="text-green-500" /><p className={`${typographyClass['p']} font-semibold text-base`}>Patient has been created successfully!</p></div>,
                     duration: 5000,
                 })
                 setFormOpen(false);
                 return;
             }
             toast({
-                description: 'Failed to create patient!',
+                description: <div className="flex justify-start items-center gap-2"><UserX className="text-red-500" /><p className={`${typographyClass['p']} font-semibold text-base`}>Failed to add patient!</p></div>,
                 variant: "destructive",
                 duration: 5000,
             })
