@@ -3,7 +3,7 @@ import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from 'next-auth/providers/google';
 import User from "@models/user";
 
-const handler: NextAuthOptions = NextAuth({
+const handler = NextAuth({
     providers: [
         GoogleProvider({
             clientId: process.env.GOOGLE_ID || '',
