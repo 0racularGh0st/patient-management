@@ -1,6 +1,31 @@
+"use client";
+import { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Button } from "@components/ui/button"
+import UserPlusIcon from "@heroicons/react/20/solid/UserPlusIcon"
+import { typographyClass } from "@utils/typographyClasses"
+import AddPatientForm from "./addPatientForm"
 const AddPatient = () => {
+  const [open, setFormOpen] = useState(false);
   return (
-    <div>AddPatient</div>
+    <Dialog open={open} onOpenChange={setFormOpen} modal>
+      <DialogTrigger asChild>
+      <Button
+        type='button'
+        onClick={() => setFormOpen(true)}
+        >
+            <UserPlusIcon width={24} height={24} className='mr-2' />
+            <h4 className={typographyClass['h4']}>Add patient</h4>
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="max-w-[100%]" style={{ width : '800px' }}>
+        <AddPatientForm setFormOpen={setFormOpen}/>
+      </DialogContent>
+    </Dialog>
   )
 }
 

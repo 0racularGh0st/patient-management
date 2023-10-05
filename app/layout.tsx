@@ -5,6 +5,8 @@ import Nav from '@components/Nav'
 import AuthProvider from '@utils/authProvider'
 import { ContentLayout } from '@components/contentLayout'
 import { ThemeProvider } from '@components/theme-provider'
+import { Toaster } from "@/components/ui/toaster"
+
 const quicksand = Quicksand({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -39,6 +41,7 @@ export default function RootLayout({
             </AuthProvider>
           </ThemeProvider>
         </main>
+        <Toaster />
       </body>
     </html>
   )

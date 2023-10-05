@@ -5,10 +5,17 @@ import { useRouter } from 'next/navigation';
 import { useState, useEffect, Fragment } from 'react'
 import Logo from '@assets/images/patientmgmt.png'
 import GoogleIcon from '../assets/icons/google.svg'
-import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon, ArrowLeftOnRectangleIcon, UserCircleIcon } from '@heroicons/react/20/solid'
 import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
 import { ModeToggle } from './ui/toggle-mode';
+import { Button } from './ui/button';
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarTrigger,
+} from "./ui/menubar"
 export const Nav = () => {
   const { data: session, status } = useSession();
   const [providers, setProviders] = useState<any>(null);
@@ -58,49 +65,16 @@ export const Nav = () => {
        (<>
        </>)
         : 
-        (<Menu as="div" className="relative inline-block text-left">
-          <div>
-            <Menu.Button className="glass_effect rounded-full hover:bg-slate-100 transition-colors py-1 px-4">
-            <div
-              className='flex justify-center items-center gap-2'
-            >
-                <p className="text_main">{session?.user?.name}</p>
-                <UserCircleIcon className='text_primary' width={30} height={30} />
-                <ChevronDownIcon width={20} height={20} className=""/>
-              </div>
-            </Menu.Button>
-          </div>
-          <Transition
-            as={Fragment}
-            enter="transition ease-out duration-100"
-            enterFrom="transform opacity-0 scale-95"
-            enterTo="transform opacity-100 scale-100"
-            leave="transition ease-in duration-75"
-            leaveFrom="transform opacity-100 scale-100"
-            leaveTo="transform opacity-0 scale-95"
-          >
-            <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-              <div className="px-1 py-1 ">
-              <Menu.Item>
-                {({ active }) => (
-                  <button
-                    className={`${
-                      active ? 'bg_primary text-white' : 'text-gray-900'
-                    } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                    onClick={() => signOut()}
-                  >
-                    <ArrowLeftOnRectangleIcon
-                        className="mr-2 h-5 w-5"
-                        aria-hidden="true"
-                      />
-                    Sign out
-                  </button>
-                )}
-              </Menu.Item>
-              </div>
-            </Menu.Items>
-          </Transition>
-        </Menu>)
+        (<Menubar>
+          <MenubarMenu>
+            <MenubarTrigger>{session?.user?.name} <UserCircleIcon className='ml-2 h-5 w-5' /></MenubarTrigger>
+            <MenubarContent>
+              <MenubarItem onClick={() => signOut()}>
+                <ArrowLeftOnRectangleIcon className='mr-2 h-5 w-5' /> Sign out
+              </MenubarItem>
+            </MenubarContent>
+          </MenubarMenu>
+        </Menubar>)
       }
     </div>
     </nav>

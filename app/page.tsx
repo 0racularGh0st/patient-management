@@ -1,3 +1,4 @@
+"use client";
 import GoogleSignIn from "@components/googleSignIn";
 import { typographyClass } from "@utils/typographyClasses";
 const Home = () => {
