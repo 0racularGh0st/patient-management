@@ -140,7 +140,7 @@ const Patient = () => {
             )}
             
           </div>
-          <div className="flex flex-col md:w-[63%] h-[200vh]">
+          <div className="flex flex-col md:w-[63%]">
             <div className="sticky top-[72px] bg-[hsl(var(--background))] z-10">
               <div className="flex gap-2 justify-between items-center flex-wrap">
                 <p className="w-[122px]"></p>
