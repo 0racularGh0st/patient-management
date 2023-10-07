@@ -1,6 +1,7 @@
 export type Patient = {
     name: string;
     age: number;
+    sex: string;
     complaint?: string | undefined;
     provisionalDiagnosis?: string | undefined;
     treatment?: string | undefined;
@@ -24,5 +25,7 @@ export type PatientStored = {
     dob: string;
     address?: string | undefined;
     phoneNo?: string | undefined;
+    sex?: string | undefined;
+    _id: string;
     visits: Array<Visit>;
 }

@@ -9,21 +9,31 @@ import Patient from '@models/patient';
 export const GET = async (req: NextRequest) => {
     const session = await getServerSession();
     const url = new URL(req.url)
-    const keyword = url.searchParams.get("keyword")
+    const keyword = url.searchParams.get("keyword");
+    const id = url.searchParams.get("id");
+
     if (!session) {
         return NextResponse.json({
             code: 401,
             message: 'Unauthorized'
         })
     }
-
     try {
         await connectToDB();
-        const data = await Patient.find({ name: { $regex: keyword, $options: 'i' } }).limit(10);
-        return NextResponse.json({
-            code: 200,
-            data,
-        })
+        if (keyword && !id) {
+            const data = await Patient.find({ name: { $regex: keyword, $options: 'i' } }).limit(10);
+            return NextResponse.json({
+                code: 200,
+                data,
+            })
+        }
+        if (id) {
+            const data = await Patient.findById(id);
+            return NextResponse.json({
+                code: 200,
+                data,
+            })
+        }
     } catch (error) {
         return new Response("Failed to create Patient", {
             status: 500,

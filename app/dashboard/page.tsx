@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from 'react';
-import SearchBar from '@components/searchBar'
+import { useRouter } from 'next/navigation';
 import ListByName from '@components/ListByName'
 import AddPatient from '@components/addPatient/addPatient';
 import {
@@ -17,6 +17,7 @@ const Dashboard = () => {
   const [keyword, setKeyword] = useInput('');
   const debouncedKeyword = useDebounce<string>(keyword, 500);
   const [patients, setPatients] = useState<Array<PatientStored>>([]);
+  const router = useRouter();
   useEffect(() => {
     if(debouncedKeyword) {
       getPatientsByKeyword(debouncedKeyword);
@@ -32,6 +33,10 @@ const Dashboard = () => {
       setPatients([...data.data]);
     }
   }
+  const handlePatientSelect = (id: string) => {
+    router.push(`/patient?id=${id}`);
+  }
+
   return (
     <div>
       <div className='h-[50%] p-4 sm:p-9 flex flex-col sm:flex-row sm:justify-center items-center sm:items-start gap-12 min-h-[400px] flex-wrap m-auto w-full'>
@@ -43,8 +48,12 @@ const Dashboard = () => {
               <CommandEmpty>No patients found!</CommandEmpty>
             )}
             {patients && patients.length > 0 && patients.map((patient, index) => (
-              <CommandItem key={index} className="cursor-pointer hover:text-accent-foreground hover:bg-accent">
-              {patient.name}
+              <CommandItem
+                key={index}
+                className="cursor-pointer hover:text-accent-foreground hover:bg-accent"
+                onSelect={() => handlePatientSelect(patient._id)}
+              >
+                {patient.name}
               </CommandItem>
             ))}
           </CommandList>

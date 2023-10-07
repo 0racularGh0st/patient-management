@@ -15,7 +15,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
             message: 'Unauthorized'
         })
     }
-    const { name, age, address, phoneNo, complaint, provisionalDiagnosis, treatment, investigations, weight, dateOfVisit }: PatientType = await req.json();
+    const { name, sex, age, address, phoneNo, complaint, provisionalDiagnosis, treatment, investigations, weight, dateOfVisit }: PatientType = await req.json();
     const dob = calculateDateOfBirth(age);
     try {
         await connectToDB();
@@ -24,6 +24,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
             dob,
             address,
             phoneNo,
+            sex,
             visits: [{
                 complaint,
                 provisionalDiagnosis,

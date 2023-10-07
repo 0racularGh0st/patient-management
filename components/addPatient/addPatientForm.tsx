@@ -13,7 +13,15 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
-  } from "@/components/ui/form"
+  } from "@/components/ui/form";
+  import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+  } from "@/components/ui/select"
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input"
 import { Button } from "@components/ui/button";
@@ -42,6 +50,7 @@ export const AddPatientForm = ({ setFormOpen }: { setFormOpen: Dispatch<SetState
             dateOfVisit: '',
             address: '',
             phoneNo: '',
+            sex: '',
         }
     });
     const { toast } = useToast();
@@ -97,21 +106,42 @@ export const AddPatientForm = ({ setFormOpen }: { setFormOpen: Dispatch<SetState
                         <FormItem>
                         <FormLabel className="font-semibold">Fullname</FormLabel>
                         <FormControl>
-                            <Input placeholder="Fullname" {...field} value={field.value || ''}/>
+                            <Input onKeyDown={(event) => { if (event.key === 'Enter') event.preventDefault(); }} placeholder="Fullname" {...field} value={field.value || ''}/>
                         </FormControl>
                         <FormMessage />
                         </FormItem>
                     )}
                     />
-                <div className="flex gap-4 flex-wrap w-full">
+                <div className="flex gap-4 flex-wrap w-full justify-between">
+                    <FormField
+                            control={form.control}
+                            name="sex"
+                            render={({ field }) => (
+                                <FormItem className="w-[calc(33%-8px)]">
+                                <FormLabel className="font-semibold">Sex</FormLabel>
+                                <FormControl>
+                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Sex"/>
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="Male">Male</SelectItem>
+                                            <SelectItem value="Female">Female</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                </FormControl>
+                                <FormMessage />
+                                </FormItem>
+                            )}
+                    />
                     <FormField
                         control={form.control}
                         name="age"
                         render={({ field }) => (
-                            <FormItem className="w-[calc(50%-8px)]">
+                            <FormItem className="w-[calc[33%-8px)]">
                             <FormLabel className="font-semibold">Age</FormLabel>
                             <FormControl>
-                                <Input placeholder="Age" {...field} type="number" value={field.value || ''}/>
+                                <Input onKeyDown={(event) => { if (event.key === 'Enter') event.preventDefault(); }} placeholder="Age" {...field} type="number" value={field.value || ''}/>
                             </FormControl>
                             <FormMessage />
                             </FormItem>
@@ -121,10 +151,10 @@ export const AddPatientForm = ({ setFormOpen }: { setFormOpen: Dispatch<SetState
                         control={form.control}
                         name="weight"
                         render={({ field }) => (
-                            <FormItem className="w-[calc(50%-8px)]">
+                            <FormItem className="w-[calc(33%-8px)]">
                             <FormLabel className="font-semibold">Weight (in Kgs)</FormLabel>
                             <FormControl>
-                                <Input placeholder="Weight" {...field} type="number" value={field.value || ''}/>
+                                <Input onKeyDown={(event) => { if (event.key === 'Enter') event.preventDefault(); }} placeholder="Weight" {...field} type="number" value={field.value || ''}/>
                             </FormControl>
                             <FormMessage />
                             </FormItem>
@@ -139,7 +169,7 @@ export const AddPatientForm = ({ setFormOpen }: { setFormOpen: Dispatch<SetState
                             <FormItem className="w-[calc(50%-8px)]">
                             <FormLabel className="font-semibold">Address</FormLabel>
                             <FormControl>
-                                <Input placeholder="Address" {...field} type="text" value={field.value || ''}/>
+                                <Input onKeyDown={(event) => { if (event.key === 'Enter') event.preventDefault(); }} placeholder="Address" {...field} type="text" value={field.value || ''}/>
                             </FormControl>
                             <FormMessage />
                             </FormItem>
@@ -152,7 +182,7 @@ export const AddPatientForm = ({ setFormOpen }: { setFormOpen: Dispatch<SetState
                             <FormItem className="w-[calc(50%-8px)]">
                             <FormLabel className="font-semibold">Phone no</FormLabel>
                             <FormControl>
-                                <Input placeholder="Phone number" {...field} type="text" value={field.value || ''}/>
+                                <Input onKeyDown={(event) => { if (event.key === 'Enter') event.preventDefault(); }} placeholder="Phone number" {...field} type="text" value={field.value || ''}/>
                             </FormControl>
                             <FormMessage />
                             </FormItem>

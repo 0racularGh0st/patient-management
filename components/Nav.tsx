@@ -42,7 +42,9 @@ export const Nav = () => {
 
   useEffect(() => {
     if (status === 'authenticated' && session?.user) {
-      router.push('/dashboard')
+      if(window.location.pathname === '/') {
+        router.push('/dashboard');
+      }
     }
     if (status === 'unauthenticated') {
       router.push('/')
@@ -50,7 +52,7 @@ export const Nav = () => {
   }, [status, session, router])
 
   return (
-    <nav className='flex justify-between items-center gap-4 w-full py-4 px-3 sm:px-8 backdrop-blur sticky top-0'>
+    <nav className='flex justify-between items-center gap-4 w-full py-4 px-3 sm:px-8  sticky top-0 z-[999999] bg-[hsl(var(--background))]'>
     <Image
       src={Logo}
       alt="Logo"
