@@ -24,7 +24,6 @@ const PatientSchema = new Schema({
     },
     sex: {
         type: String,
-        required: [true, 'Sex is required!'],
     },
     visits: {
         type: Array<Visit>,

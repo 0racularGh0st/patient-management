@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/accordion";
 
 import Link from "next/link";
+import AddVisit from "@components/addVisit/addVisit";
 const Patient = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -85,19 +86,26 @@ const Patient = () => {
     const time = withTime ? ` ${hours}:${minutes} ${ampm}` : '';
     return formattedTime + time;
   };
+  const onAddedVisit = () => {
+    if (id) {
+        getPatientDetails(id);
+      }
+  }
   return (
     <div className="w-full max-w-[calc(100vw-32px)]">
       <Button
         className="mb-1 mt-4 flex justify-start items-center gap-2 md:sticky md:top-[64px] text-slate-500"
         variant="ghost"
+        onClick={() => router.push("/dashboard")}
       >
         <ArrowLeft />
-        <Link href="/dashboard">Back</Link>
+        Back
       </Button>
       <h3
         className={`${typographyClass["h3"]} text-4xl text-center mb-8 text-slate-500`}
       >
         Patient Details
+        <Separator className="mt-2"/>
       </h3>
       {loaded && (
         <div className="m-auto flex flex-col gap-6 w-[900px] max-w-[calc(100vw-32px)]">
@@ -136,10 +144,7 @@ const Patient = () => {
                 >
                     Visits <span className="text-slate-500">{`(${patient?.visits?.length || 0})`}</span> 
                 </h3>
-                <Button variant="ghost">
-                    <PlusIcon className="mr-2 w-5 h-5" />
-                    <span className="text-[14px] font-semibold">Add Visit</span>
-                </Button>
+                <AddVisit id={id || ''} onSuccess={onAddedVisit}/>
               </div>
               <Separator className="mt-2" />
               </div>
