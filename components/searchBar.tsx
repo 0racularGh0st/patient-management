@@ -1,5 +1,9 @@
 import { Input } from "./ui/input";
-const SearchBar = () => {
+type InputProps = {
+  value: string;
+  onChange: any;
+};
+const SearchBar = (props: InputProps) => {
   return (
     <div className='max_mobile_element'>
         <div className="w-72 relative flex items-center h-10 rounded-lg overflow-hidden max_mobile_element">
@@ -10,9 +14,11 @@ const SearchBar = () => {
             </div>
 
             <Input
-            type="text"
-            id="search"
-            placeholder="Search by name..." /> 
+              {...props}
+              type="text"
+              id="search"
+              placeholder="Search by name..." 
+            /> 
         </div>
     </div>
   )

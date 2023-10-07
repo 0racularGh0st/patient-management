@@ -17,6 +17,7 @@ const AddPatient = () => {
       <Button
         type='button'
         onClick={() => setFormOpen(true)}
+        className="shadow-sm hover:shadow-md transition-shadow duration-200 ease-in-out"
         >
             <UserPlusIcon width={24} height={24} className='mr-2' />
             <h4 className={typographyClass['h4']}>Add patient</h4>
