@@ -9,7 +9,8 @@ import { Button } from "@components/ui/button"
 import UserPlusIcon from "@heroicons/react/20/solid/UserPlusIcon"
 import { typographyClass } from "@utils/typographyClasses"
 import AddPatientForm from "./addPatientForm"
-const AddPatient = () => {
+const AddPatient = (props: { onSuccess: () => void}) => {
+  const { onSuccess } = props;
   const [open, setFormOpen] = useState(false);
   return (
     <Dialog open={open} onOpenChange={setFormOpen} modal>
@@ -20,11 +21,11 @@ const AddPatient = () => {
         className="shadow-sm hover:shadow-md transition-shadow duration-200 ease-in-out"
         >
             <UserPlusIcon width={24} height={24} className='mr-2' />
-            <h4 className={typographyClass['h4']}>Add patient</h4>
+            <p className={typographyClass['p']}>Add patient</p>
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-[calc(100%-32px)]" style={{ width : '800px' }}>
-        <AddPatientForm setFormOpen={setFormOpen}/>
+        <AddPatientForm setFormOpen={setFormOpen} onSuccess={onSuccess}/>
       </DialogContent>
     </Dialog>
   )

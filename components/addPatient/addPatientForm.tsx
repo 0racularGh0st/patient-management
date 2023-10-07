@@ -31,7 +31,7 @@ import { useToast } from "@/components/ui/use-toast"
 import { useSession } from 'next-auth/react'
 
 
-export const AddPatientForm = ({ setFormOpen }: { setFormOpen: Dispatch<SetStateAction<boolean>>}) => {
+export const AddPatientForm = ({ setFormOpen, onSuccess }: { setFormOpen: Dispatch<SetStateAction<boolean>>, onSuccess: () => void}) => {
     const router = useRouter();
     const { data: session, status } = useSession();
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -73,6 +73,7 @@ export const AddPatientForm = ({ setFormOpen }: { setFormOpen: Dispatch<SetState
                 body: JSON.stringify({ ...dataWithDate })
             })
             if (response.ok) {
+                onSuccess();
                 setIsSubmitting(false);
                 toast({
                     description: <div className="flex justify-start items-center gap-2"><CheckCircle className="text-green-500" /><p className={`${typographyClass['p']} font-semibold text-base`}>Patient has been created successfully!</p></div>,
