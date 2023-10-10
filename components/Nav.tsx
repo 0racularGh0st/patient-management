@@ -46,9 +46,6 @@ export const Nav = () => {
         router.push('/dashboard');
       }
     }
-    if (status === 'unauthenticated') {
-      router.push('/')
-    }
   }, [status, session, router])
 
   return (

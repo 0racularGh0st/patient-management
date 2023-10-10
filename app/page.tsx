@@ -23,6 +23,3 @@ const Home = () => {
 }
 
 export default Home;
-
-//how to stop form from submitting on enter
-//https://stackoverflow.com/questions/895171/prevent-users-from-submitting-a-form-by-hitting-enter
