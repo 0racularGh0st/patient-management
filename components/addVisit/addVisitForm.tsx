@@ -93,7 +93,7 @@ export const AddVisitForm = ({ setFormOpen, id, onSuccess }: { setFormOpen: Disp
                     control={form.control}
                     name="weight"
                     render={({ field }) => (
-                        <FormItem className="w-[calc(33%-8px)]">
+                        <FormItem className="w-full sm:w-[calc(33%-8px)]">
                         <FormLabel className="font-semibold">Weight (in Kgs)</FormLabel>
                         <FormControl>
                             <Input onKeyDown={(event) => { if (event.key === 'Enter') event.preventDefault(); }} placeholder="Weight" {...field} type="number" value={field.value || ''}/>
@@ -107,7 +107,7 @@ export const AddVisitForm = ({ setFormOpen, id, onSuccess }: { setFormOpen: Disp
                     control={form.control}
                     name="complaint"
                     render={({ field }) => (
-                        <FormItem className="w-[calc(50%-8px)]">
+                        <FormItem className="w-full sm:w-[calc(50%-8px)]">
                         <FormLabel className="font-semibold">Complaint</FormLabel>
                         <FormControl>
                             <Textarea placeholder="Complaint" {...field} className="resize-none" value={field.value || ''}/>
@@ -120,7 +120,7 @@ export const AddVisitForm = ({ setFormOpen, id, onSuccess }: { setFormOpen: Disp
                     control={form.control}
                     name="provisionalDiagnosis"
                     render={({ field }) => (
-                        <FormItem className="w-[calc(50%-8px)]">
+                        <FormItem className="w-full sm:w-[calc(50%-8px)]">
                         <FormLabel className="font-semibold">Provisional Diagnosis</FormLabel>
                         <FormControl>
                             <Textarea placeholder="Provisional Diagnosis" {...field} className="resize-none" value={field.value || ''}/>
@@ -135,7 +135,7 @@ export const AddVisitForm = ({ setFormOpen, id, onSuccess }: { setFormOpen: Disp
                     control={form.control}
                     name="treatment"
                     render={({ field }) => (
-                        <FormItem className="w-[calc(50%-8px)]">
+                        <FormItem className="w-full sm:w-[calc(50%-8px)]">
                         <FormLabel className="font-semibold">Treatment</FormLabel>
                         <FormControl>
                             <Textarea placeholder="Treatment" {...field} className="resize-none" value={field.value || ''}/>
@@ -148,7 +148,7 @@ export const AddVisitForm = ({ setFormOpen, id, onSuccess }: { setFormOpen: Disp
                     control={form.control}
                     name="investigations"
                     render={({ field }) => (
-                        <FormItem className="w-[calc(50%-8px)]">
+                        <FormItem className="w-full sm:w-[calc(50%-8px)]">
                         <FormLabel className="font-semibold">Investigations</FormLabel>
                         <FormControl>
                             <Textarea placeholder="Investigations" {...field} className="resize-none" value={field.value || ''}/>

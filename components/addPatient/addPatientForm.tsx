@@ -1,5 +1,5 @@
 "use client";
-import { Loader2, CheckCircle, UserX } from "lucide-react"
+import { Loader2, CheckCircle, UserX, UserPlusIcon } from "lucide-react"
 import { Dispatch, SetStateAction, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -246,8 +246,8 @@ export const AddPatientForm = ({ setFormOpen, onSuccess }: { setFormOpen: Dispat
                     )}
                 />
                 </div>
-                 <Button type="submit" disabled={isSubmitting}>
-                 {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                 <Button type="submit" disabled={isSubmitting} className="shadow-sm hover:shadow-md transition-shadow duration-200 ease-in-out">
+                 {isSubmitting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <UserPlusIcon width={20} height={20} className='mr-2 h-4 w-4' />}
                     Add patient
                 </Button>
             </form>

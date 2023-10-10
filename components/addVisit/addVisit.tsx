@@ -18,7 +18,6 @@ const AddVisit = (props: { id: string, onSuccess: () => void}) => {
         type='button'
         onClick={() => setFormOpen(true)}
         className="hover:shadow-md transition-shadow duration-200 ease-in-out"
-        variant="ghost"
         >
             <PlusIcon className="mr-2 w-5 h-5" />
             <span className="text-[14px] font-semibold">Add Visit</span>

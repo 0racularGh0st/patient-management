@@ -20,10 +20,11 @@ import {
 import useInput from "@utils/hooks/useInput";
 import useDebounce from "@utils/hooks/useDebounce";
 import { PatientStored } from "@components/addPatient/types";
-import { Loader2 } from "lucide-react";
+import { Loader2, UserPlusIcon } from "lucide-react";
 import { typographyClass } from "@utils/typographyClasses";
 import { Skeleton } from "@components/ui/skeleton";
 import { Separator } from "@components/ui/separator";
+import { Button } from "@components/ui/button";
 const Dashboard = () => {
   const [keyword, setKeyword] = useInput("");
   const debouncedKeyword = useDebounce<string>(keyword, 500);
@@ -76,7 +77,14 @@ const Dashboard = () => {
   return (
     <div>
       <div className="p-4 sm:p-9 flex flex-col sm:flex-row sm:justify-center items-center sm:items-start gap-12 min-h-[400px] flex-wrap m-auto w-full">
-        <AddPatient onSuccess={onAddedPatient}/>
+        <Button
+        type='button'
+        onClick={() => router.push('/add-patient')}
+        className="shadow-sm hover:shadow-md transition-shadow duration-200 ease-in-out"
+        >
+            <UserPlusIcon width={20} height={20} className='mr-2' />
+            <p className={typographyClass['p']}>Add patient</p>
+        </Button>
         <Command
           className="w-72 max-w-[calc(100vw-32px) rounded-lg border shadow-sm"
           onChange={setKeyword}
@@ -120,7 +128,7 @@ const Dashboard = () => {
           <CardContent>
             {patientCount !== null ? (
               <CardDescription>
-                <p className="text-md font-semibold">{patientCount}</p>
+                <span className="text-md font-semibold">{patientCount}</span>
               </CardDescription>
             ) : (
               <Skeleton className="w-[150px] h-[28px]" />
@@ -137,7 +145,7 @@ const Dashboard = () => {
           <CardContent>
             {visitCount !== null ? (
               <CardDescription>
-                <p className="text-md font-semibold">{visitCount}</p>
+                <span className="text-md font-semibold">{visitCount}</span>
               </CardDescription>
             ) : (
               <Skeleton className="w-[150px] h-[28px]" />
@@ -153,18 +161,17 @@ const Dashboard = () => {
           </CardHeader>
           <CardContent>
             {maleFemaleCount !== null ?
-              <CardDescription>
                 <div className="flex justify-between">
-                  <p className="text-md ">
+                  <span className="text-md ">
                     <span className="font-bold">Male: </span>
                     {maleFemaleCount?.male}
-                  </p>
-                  <p className="text-md ">
+                  </span>
+                  <span className="text-md ">
                     <span className="font-bold">Female: </span>
                     {maleFemaleCount?.female}
-                  </p>
+                  </span>
                 </div>
-              </CardDescription> :
+               :
               <Skeleton className="w-[150px] h-[28px]" />
             }
           </CardContent>
@@ -172,14 +179,14 @@ const Dashboard = () => {
         <Card className="w-[220px] shadow-sm hover:shadow-md transition-shadow ease-in-out duration-300">
           <CardHeader>
             <CardTitle>
-              <p className={`${typographyClass["p"]} text-lg`}>Returning Patients</p>
+              <span className={`${typographyClass["p"]} text-lg`}>Returning Patients</span>
             </CardTitle>
             <Separator className="mt-1 mb-1" />
           </CardHeader>
           <CardContent>
           {returningPatientsCount !== null ? (
               <CardDescription>
-                <p className="text-md font-semibold">{returningPatientsCount}</p>
+                <span className="text-md font-semibold">{returningPatientsCount}</span>
               </CardDescription>
             ) : (
               <Skeleton className="w-[150px] h-[28px]" />
