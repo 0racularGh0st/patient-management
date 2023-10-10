@@ -29,7 +29,7 @@ import { useToast } from "@/components/ui/use-toast"
 import { useSession } from 'next-auth/react'
 
 
-export const AddPatientForm = () => {
+const AddPatientForm = () => {
     const router = useRouter();
     const { data: session, status } = useSession();
     const [isSubmitting, setIsSubmitting] = useState(false);
