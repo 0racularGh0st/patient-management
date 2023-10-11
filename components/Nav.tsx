@@ -56,7 +56,6 @@ export const Nav = () => {
       }
     }
   }, [status, session, router])
-
   const handleSignout = () => {
     signOut().then(() => {
       router.push('/');
