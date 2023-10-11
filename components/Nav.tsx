@@ -47,8 +47,11 @@ export const Nav = () => {
       }
       return;
     }
+
     if (status === 'unauthenticated' || !session) {
-      router.push('/')
+      if(window.location.pathname !== '/') {
+        router.push('/')
+      }
     }
   }, [status, session, router])
 
