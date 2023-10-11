@@ -50,7 +50,7 @@ export const Nav = () => {
       return;
     }
 
-    if (status === 'unauthenticated' || !session) {
+    if (status === 'unauthenticated' && !session) {
       if(window.location.pathname !== '/') {
         router.push('/')
       }
