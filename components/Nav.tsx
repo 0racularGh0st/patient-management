@@ -45,9 +45,18 @@ export const Nav = () => {
       if(window.location.pathname === '/') {
         router.push('/dashboard');
       }
+      return;
+    }
+    if (status === 'unauthenticated' || !session) {
+      router.push('/')
     }
   }, [status, session, router])
 
+  const handleSignout = () => {
+    signOut().then(() => {
+      router.push('/');
+    })
+  }
   return (
     <nav className='flex justify-between items-center gap-4 w-full py-4 px-3 sm:px-8  sticky top-0 z-[999999] bg-[hsl(var(--background))]'>
     <Image
@@ -67,8 +76,8 @@ export const Nav = () => {
         (<Menubar>
           <MenubarMenu>
             <MenubarTrigger>{session?.user?.name} <UserCircleIcon className='ml-2 h-5 w-5' /></MenubarTrigger>
-            <MenubarContent>
-              <MenubarItem onClick={() => signOut()}>
+            <MenubarContent className='z-[99999999]'>
+              <MenubarItem onClick={handleSignout}>
                 <ArrowLeftOnRectangleIcon className='mr-2 h-5 w-5' /> Sign out
               </MenubarItem>
             </MenubarContent>
