@@ -1,14 +1,12 @@
 "use client";
-import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation';
-import { useState, useEffect, Fragment } from 'react'
+import { useEffect } from 'react'
 import Logo from '@assets/images/patientmgmt.png'
 import GoogleIcon from '../assets/icons/google.svg'
-import { ChevronDownIcon, ArrowLeftOnRectangleIcon, UserCircleIcon } from '@heroicons/react/20/solid'
+import {  ArrowLeftOnRectangleIcon, UserCircleIcon } from '@heroicons/react/20/solid'
 import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
 import { ModeToggle } from './ui/toggle-mode';
-import { Button } from './ui/button';
 import {
   Menubar,
   MenubarContent,
@@ -18,7 +16,6 @@ import {
 } from "./ui/menubar"
 export const Nav = () => {
   const { data: session, status } = useSession();
-  const [providers, setProviders] = useState<any>(null);
   const router = useRouter();
   const Spinner = () => {
     return (<div
@@ -31,14 +28,6 @@ export const Nav = () => {
     </div>)
   };
 
-  useEffect(() => {
-    const updateProviders = async () => {
-      const response = await getProviders();
-
-      setProviders(response);
-    }
-    updateProviders();
-  }, [])
 
   useEffect(() => {
     console.log('status ->', status,)
