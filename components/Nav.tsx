@@ -47,6 +47,8 @@ export const Nav = () => {
       }
       return;
     }
+    console.log('status ->', status,)
+    console.log('session ->', session)
 
     if (status === 'unauthenticated' || !session) {
       if(window.location.pathname !== '/') {
