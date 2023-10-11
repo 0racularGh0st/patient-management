@@ -1,9 +1,10 @@
-import { typographyClass } from "@utils/typographyClasses";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 import { Separator } from "./ui/separator";
+import { useRouter } from "next/navigation";
 
 const ListByName = () => {
+  const router = useRouter();
   const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
   return (
     <Card>
@@ -17,6 +18,7 @@ const ListByName = () => {
                     <Button
                         variant="ghost"
                         key={letter}
+                        onClick={() => router.push(`/patient/list?letter=${letter}`)}
                     >
                         <p>{letter}</p>
                     </Button>

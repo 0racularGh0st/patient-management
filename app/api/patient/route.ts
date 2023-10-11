@@ -3,7 +3,6 @@ import {
     NextRequest, NextResponse,
 } from 'next/server';
 import { getServerSession } from "next-auth/next"
-import { Patient as PatientType } from '@components/addPatient/types';
 import Patient from '@models/patient';
 
 export const GET = async (req: NextRequest) => {
@@ -12,6 +11,8 @@ export const GET = async (req: NextRequest) => {
     const keyword = url.searchParams.get("keyword");
     const id = url.searchParams.get("id");
     const count = url.searchParams.get("count");
+    const letter = url.searchParams.get("letter");
+
     if (!session) {
         return NextResponse.json({
             code: 401,
@@ -77,6 +78,13 @@ export const GET = async (req: NextRequest) => {
                 visitCount: (visitCount && visitCount.length > 0) ? visitCount[0]?.total : 0,
                 maleFemaleCount: { male: maleFemaleCountObj?.male || 0, female: maleFemaleCountObj?.female || 0},
                 returningPatientsCount: (returningPatientsCount && returningPatientsCount.length > 0) ? returningPatientsCount[0]?.total : 0,
+            })
+        }
+        if (letter) {
+            const data = await Patient.find({ name: { $regex: `^${letter}`, $options: 'i' } });
+            return NextResponse.json({
+                code: 200,
+                data,
             })
         }
     } catch (error) {

@@ -96,7 +96,7 @@ const Patient = () => {
       <Button
         className="mb-1 mt-4 flex justify-start items-center gap-2 md:sticky md:top-[64px] text-slate-500"
         variant="ghost"
-        onClick={() => router.push("/dashboard")}
+        onClick={() => router.back()}
       >
         <ArrowLeft />
         Back
