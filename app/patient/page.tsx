@@ -171,21 +171,21 @@ const Patient = () => {
                     <div className="flex flex-col gap-1 text-slate-500 text-[16px]">
                       <p>
                         <span className="font-semibold ">Complaint: </span>
-                        {visit?.complaint || "N/A"}
+                        {visit?.complaint?.split(/\n/g).map((line, index) => <span key={`${index}-complaint`}>{line}<br /></span>) || "N/A"}
                       </p>
                       <p>
                         <span className="font-semibold ">Investigations: </span>
-                        {visit?.investigations || "N/A"}
+                        {visit?.investigations?.split(/\n/g).map((line, index) => <span key={`${index}-investigation`}>{line}<br /></span>) || "N/A"}
                       </p>
                       <p>
                         <span className="font-semibold ">
                           Provisional Diagnosis:{" "}
                         </span>
-                        {visit?.provisionalDiagnosis || "N/A"}
+                        {visit?.provisionalDiagnosis?.split(/\n/g).map((line, index) => <span key={`${index}-diagnosis`}>{line}<br /></span>) || "N/A"}
                       </p>
                       <p>
                         <span className="font-semibold ">Treatment: </span>
-                        {visit?.treatment || "N/A"}
+                        {visit?.treatment?.split(/\n/g).map((line, index) => <span key={`${index}-treatment`}>{line}<br /></span>) || "N/A"}
                       </p>
                       <p>
                         <span className="font-semibold ">
