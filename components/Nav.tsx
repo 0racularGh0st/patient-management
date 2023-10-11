@@ -41,14 +41,14 @@ export const Nav = () => {
   }, [])
 
   useEffect(() => {
+    console.log('status ->', status,)
+    console.log('session ->', session)
     if (status === 'authenticated' && session?.user) {
       if(window.location.pathname === '/') {
         router.push('/dashboard');
       }
       return;
     }
-    console.log('status ->', status,)
-    console.log('session ->', session)
 
     if (status === 'unauthenticated' || !session) {
       if(window.location.pathname !== '/') {
