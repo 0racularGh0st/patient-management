@@ -320,13 +320,33 @@ const Patient = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 max-w-full">
               {/* Weight Progression Chart */}
               {(() => {
+                const formatDateWithOrdinal = (dateString: string) => {
+                  if (!dateString) return '';
+                  const date = new Date(dateString);
+                  const day = date.getDate();
+                  const month = date.toLocaleDateString('en-US', { month: 'long' });
+                  const year = date.getFullYear();
+
+                  const getOrdinalSuffix = (day: number) => {
+                    if (day > 3 && day < 21) return 'th';
+                    switch (day % 10) {
+                      case 1: return 'st';
+                      case 2: return 'nd';
+                      case 3: return 'rd';
+                      default: return 'th';
+                    }
+                  };
+
+                  return `${day}${getOrdinalSuffix(day)} ${month} ${year}`;
+                };
+
                 const weightData = patient.visits
                   .slice()
                   .reverse() // Reverse to show chronological order
                   .map((visit, index) => ({
                     visit: `Visit ${index + 1}`,
                     weight: visit.weight || null,
-                    date: visit.dateOfVisit ? new Date(visit.dateOfVisit).toLocaleDateString() : '',
+                    date: visit.dateOfVisit ? formatDateWithOrdinal(visit.dateOfVisit) : '',
                   }))
                   .filter(item => item.weight !== null && item.weight !== undefined);
 
@@ -357,7 +377,17 @@ const Patient = () => {
                           <YAxis />
                           <ChartTooltip
                             cursor={false}
-                            content={<ChartTooltipContent />}
+                            content={<ChartTooltipContent
+                              formatter={(value) => [
+                                `${value} kg`
+                              ]}
+                              labelFormatter={(label, payload) => {
+                                if (payload && payload[0]) {
+                                  return `${label} - ${payload[0].payload.date}`;
+                                }
+                                return label;
+                              }}
+                            />}
                           />
                           <Line
                             type="monotone"
