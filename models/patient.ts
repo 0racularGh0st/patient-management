@@ -1,12 +1,26 @@
 import { Schema, model, models } from 'mongoose';
-type Visit = {
-  complaint: string,
-  provisionalDiagnosis: string,
-  treatment: string,
-  investigations: string,
-  weight: number,
-  dateOfVisit: string,
-}
+
+const VisitSchema = new Schema({
+  complaint: {
+    type: String,
+  },
+  provisionalDiagnosis: {
+    type: String,
+  },
+  treatment: {
+    type: String,
+  },
+  investigations: {
+    type: String,
+  },
+  weight: {
+    type: Number,
+  },
+  dateOfVisit: {
+    type: String,
+  },
+});
+
 const PatientSchema = new Schema({
     name: {
         type: String,
@@ -26,7 +40,7 @@ const PatientSchema = new Schema({
         type: String,
     },
     visits: {
-        type: Array<Visit>,
+        type: [VisitSchema],
         required: [true, 'Visit info is required'],
     }
 })

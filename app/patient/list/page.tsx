@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { ArrowLeft, ExternalLink, Loader2 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { PatientStored } from "@components/addPatient/types";
+import { PatientStored } from "@app/add-patient/types";
 import { typographyClass } from "@utils/typographyClasses";
 import { Button } from "@components/ui/button";
 import { Separator } from "@/components/ui/separator";

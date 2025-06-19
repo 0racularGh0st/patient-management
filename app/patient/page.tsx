@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import EditPatientModal from "@/components/editPatient/editPatientModal";
+import EditVisitModal from "@/components/editVisit/editVisitModal";
 
 import {
   Accordion,
@@ -33,6 +34,15 @@ const Patient = () => {
   >(null);
   const [loaded, setLoaded] = useState<boolean>(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
+  const [editVisitModal, setEditVisitModal] = useState<{
+    isOpen: boolean;
+    visitIndex: number;
+    visit: any;
+  }>({
+    isOpen: false,
+    visitIndex: -1,
+    visit: null,
+  });
   const getPatientDetails = useCallback(async (id: string) => {
     const res = await fetch(`/api/patient?id=${id}`);
     const data = await res.json();
@@ -108,6 +118,32 @@ const Patient = () => {
   };
 
   const handleEditSuccess = () => {
+    if (id) {
+      getPatientDetails(id);
+    }
+  };
+
+  const handleEditVisitClick = (visitIndex: number, visit: any) => {
+    // Since visits are reversed in the frontend, we need to calculate the correct database index
+    const totalVisits = patient?.visits?.length || 0;
+    const databaseIndex = totalVisits - 1 - visitIndex;
+
+    setEditVisitModal({
+      isOpen: true,
+      visitIndex: databaseIndex,
+      visit,
+    });
+  };
+
+  const handleEditVisitModalClose = () => {
+    setEditVisitModal({
+      isOpen: false,
+      visitIndex: -1,
+      visit: null,
+    });
+  };
+
+  const handleEditVisitSuccess = () => {
     if (id) {
       getPatientDetails(id);
     }
@@ -201,13 +237,26 @@ const Patient = () => {
             <Accordion type="single" collapsible className="w-full">
               {patient?.visits?.map((visit, index) => (
                 <AccordionItem value={`item-${index + 1}`} key={index}>
-                  <AccordionTrigger className="opacity-75 hover:no-underline">
-                    <p>
-                      <span className="font-semibold text-slate-500">
-                        Visit Date:{" "}
-                      </span>
-                      {formatDate(visit.dateOfVisit || "", false, false)}
-                    </p>
+                  <AccordionTrigger className="opacity-75 hover:no-underline group">
+                    <div className="flex justify-between items-center w-full pr-4">
+                      <p>
+                        <span className="font-semibold text-slate-500">
+                          Visit Date:{" "}
+                        </span>
+                        {formatDate(visit.dateOfVisit || "", false, false)}
+                      </p>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 h-8 px-2"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleEditVisitClick(index, visit);
+                        }}
+                      >
+                        <PencilIcon className="w-3 h-3" />
+                      </Button>
+                    </div>
                   </AccordionTrigger>
                   <AccordionContent>
                     <div className="flex flex-col gap-1 text-slate-500 text-[16px]">
@@ -261,6 +310,18 @@ const Patient = () => {
           isOpen={isEditModalOpen}
           onClose={handleEditModalClose}
           onSuccess={handleEditSuccess}
+        />
+      )}
+
+      {/* Edit Visit Modal */}
+      {editVisitModal.isOpen && editVisitModal.visit && (
+        <EditVisitModal
+          visit={editVisitModal.visit}
+          patientId={patient?._id || ''}
+          visitIndex={editVisitModal.visitIndex}
+          isOpen={editVisitModal.isOpen}
+          onClose={handleEditVisitModalClose}
+          onSuccess={handleEditVisitSuccess}
         />
       )}
     </div>
