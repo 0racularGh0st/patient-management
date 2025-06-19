@@ -432,7 +432,7 @@ const Dashboard = () => {
                 Patient distribution by age groups
               </CardDescription>
             </CardHeader>
-            <CardContent className="pt-2 sm:pt-6">
+            <CardContent className="p-0 pt-2 sm:pt-6">
               {ageGroups !== null ? (
                 <ChartContainer
                   config={{
