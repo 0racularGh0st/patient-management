@@ -42,6 +42,13 @@ const Dashboard = () => {
     male?: number;
     female?: number;
   } | null>(null);
+  const [ageGroups, setAgeGroups] = useState<{
+    '0-18': number;
+    '19-35': number;
+    '36-50': number;
+    '51-65': number;
+    '65+': number;
+  } | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -70,8 +77,21 @@ const Dashboard = () => {
     setMaleFemaleCount(data?.maleFemaleCount);
     setReturningPatientsCount(data?.returningPatientsCount);
   };
+
+  const getAnalyticsData = async () => {
+    try {
+      const res = await fetch(`/api/analytics`);
+      const data = await res.json();
+      if (data?.data?.ageDistribution) {
+        setAgeGroups(data.data.ageDistribution);
+      }
+    } catch (error) {
+      console.error('Error fetching analytics data:', error);
+    }
+  };
   useEffect(() => {
     getPatientCount();
+    getAnalyticsData();
   }, []);
   const handlePatientSelect = (id: string) => {
     router.push(`/patient?id=${id}`);
@@ -204,7 +224,6 @@ const Dashboard = () => {
       <div className="pb-10">
         <h2 className={`${typographyClass["h2"]} text-xl sm:text-2xl mb-4 sm:mb-6 text-center`}>
           Analytics Dashboard
-          <Separator className="mt-2" />
         </h2>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 lg:gap-8 max-w-7xl mx-auto overflow-hidden">
@@ -215,7 +234,7 @@ const Dashboard = () => {
                 <Users className="h-4 w-4 sm:h-5 sm:w-5" />
                 Gender Distribution
               </CardTitle>
-              <CardDescription className="text-xs sm:text-sm">
+              <CardDescription className="text-sm sm:text-sm">
                 Patient distribution by gender
               </CardDescription>
             </CardHeader>
@@ -268,7 +287,7 @@ const Dashboard = () => {
                 <Activity className="h-4 w-4 sm:h-5 sm:w-5" />
                 Patient Overview
               </CardTitle>
-              <CardDescription className="text-xs sm:text-sm">
+              <CardDescription className="text-sm sm:text-sm">
                 Total patients vs returning patients
               </CardDescription>
             </CardHeader>
@@ -342,7 +361,7 @@ const Dashboard = () => {
                 <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5" />
                 Visit Statistics
               </CardTitle>
-              <CardDescription className="text-xs sm:text-sm">
+              <CardDescription className="text-sm sm:text-sm">
                 Average visits per patient
               </CardDescription>
             </CardHeader>
@@ -399,11 +418,101 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
+          {/* Age Groups Distribution */}
+          <Card className="shadow-sm hover:shadow-md transition-shadow ease-in-out duration-300 w-full max-w-full overflow-hidden">
+            <CardHeader className="pb-2 sm:pb-6">
+              <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                <Users className="h-4 w-4 sm:h-5 sm:w-5" />
+                Age Distribution
+              </CardTitle>
+              <CardDescription className="text-sm sm:text-sm">
+                Patient distribution by age groups
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="pt-2 sm:pt-6">
+              {ageGroups !== null ? (
+                <ChartContainer
+                  config={{
+                    '0-18': {
+                      label: "0-18 years",
+                      color: "hsl(var(--chart-1))",
+                    },
+                    '19-35': {
+                      label: "19-35 years",
+                      color: "hsl(var(--chart-2))",
+                    },
+                    '36-50': {
+                      label: "36-50 years",
+                      color: "hsl(var(--chart-3))",
+                    },
+                    '51-65': {
+                      label: "51-65 years",
+                      color: "hsl(var(--chart-4))",
+                    },
+                    '65+': {
+                      label: "65+ years",
+                      color: "hsl(var(--chart-5))",
+                    },
+                  }}
+                  className="h-[200px] sm:h-[250px]"
+                >
+                  <BarChart
+                    data={[
+                      {
+                        category: "0-18",
+                        value: ageGroups['0-18'],
+                        label: "0-18 years",
+                      },
+                      {
+                        category: "19-35",
+                        value: ageGroups['19-35'],
+                        label: "19-35 years",
+                      },
+                      {
+                        category: "36-50",
+                        value: ageGroups['36-50'],
+                        label: "36-50 years",
+                      },
+                      {
+                        category: "51-65",
+                        value: ageGroups['51-65'],
+                        label: "51-65 years",
+                      },
+                      {
+                        category: "65+",
+                        value: ageGroups['65+'],
+                        label: "65+ years",
+                      },
+                    ]}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="category" />
+                    <YAxis />
+                    <ChartTooltip
+                      cursor={false}
+                      content={<ChartTooltipContent />}
+                    />
+                    <Bar
+                      dataKey="value"
+                      fill="var(--color-0-18)"
+                      label={{ position: 'top', fontSize: 10, fill: 'var(--foreground)' }}
+                      maxBarSize={50}
+                    />
+                  </BarChart>
+                </ChartContainer>
+              ) : (
+                <div className="h-[200px] sm:h-[250px] flex items-center justify-center">
+                  <Skeleton className="w-full h-[160px] sm:h-[200px]" />
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
           {/* Key Metrics Summary */}
           <Card className="shadow-sm hover:shadow-md transition-shadow ease-in-out duration-300 w-full max-w-full overflow-hidden">
             <CardHeader className="pb-2 sm:pb-6">
               <CardTitle className="text-base sm:text-lg">Key Metrics</CardTitle>
-              <CardDescription className="text-xs sm:text-sm">
+              <CardDescription className="text-sm sm:text-sm">
                 Important statistics at a glance
               </CardDescription>
             </CardHeader>
