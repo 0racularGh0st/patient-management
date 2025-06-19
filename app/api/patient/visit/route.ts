@@ -25,12 +25,6 @@ export const PATCH = async (req: NextRequest, res: NextResponse) => {
             dateOfVisit,
         }
         const existingPatient = await Patient.findById(id);
-        console.log({existingPatient});
-        // if(!existingPatient) {
-        //     return new Response("Patient not found", {
-        //         status: 404,
-        //     })
-        // }
         
         existingPatient.visits.push(newVisit);
         await existingPatient.save();

@@ -124,14 +124,14 @@ const PatientList = () => {
       <Table className="mt-6">
         <TableHeader>
             <TableRow>
-                <TableHead className="w-[175px] sticky left-0 bg-[hsl(var(--background))]">Name</TableHead>
-                <TableHead className="text-right">Age</TableHead>
-                <TableHead>Sex</TableHead>
-                <TableHead className="text-right w-[275px]">Last Visit</TableHead>
-                <TableHead className="text-right w-[120px]">Last Weight</TableHead>
-                <TableHead className="text-right w-[85px]">Visits</TableHead>
-                <TableHead>Phone Number</TableHead>
-                <TableHead>Address</TableHead>
+                <TableHead className="w-[175px] sticky left-0 bg-[hsl(var(--background))] font-[900]">Name</TableHead>
+                <TableHead className="text-right font-[900]">Age</TableHead>
+                <TableHead className="font-[900]">Sex</TableHead>
+                <TableHead className="text-right w-[275px] font-[900]">Last Visit</TableHead>
+                <TableHead className="text-right w-[120px] font-[900]">Last Weight</TableHead>
+                <TableHead className="text-right w-[85px] font-[900]">Visits</TableHead>
+                <TableHead className="font-[900]">Phone Number</TableHead>
+                <TableHead className="font-[900]">Address</TableHead>
             </TableRow>
         </TableHeader>
         <TableBody>
