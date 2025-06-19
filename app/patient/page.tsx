@@ -9,6 +9,20 @@ import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import EditPatientModal from "@/components/editPatient/editPatientModal";
 import EditVisitModal from "@/components/editVisit/editVisitModal";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, BarChart, Bar } from "recharts";
+import { TrendingUp, Calendar } from "lucide-react";
 
 import {
   Accordion,
@@ -149,9 +163,9 @@ const Patient = () => {
     }
   };
   return (
-    <div className="w-full max-w-[calc(100vw-32px)]">
+    <div className="w-full max-w-[calc(100vw-32px)] pb-10">
       <Button
-        className="mb-1 flex justify-start items-center gap-2 md:sticky md:top-[64px] text-slate-500"
+        className="mb-1 flex justify-start items-center gap-2 md:sticky md:top-[64px] text-slate-500 bg-[hsl(var(--background))]"
         variant="ghost"
         onClick={() => router.back()}
       >
@@ -294,6 +308,135 @@ const Patient = () => {
             )}
           </div>
         </div>
+
+        {/* Patient Charts Section */}
+        {loaded && patient?.visits && patient.visits.length > 1 && (
+          <div className="w-full mt-8">
+            <h3 className={`${typographyClass["h4"]} text-2xl mb-4 text-center`}>
+              Health Trends
+              <Separator className="mt-2" />
+            </h3>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 max-w-full">
+              {/* Weight Progression Chart */}
+              {(() => {
+                const weightData = patient.visits
+                  .slice()
+                  .reverse() // Reverse to show chronological order
+                  .map((visit, index) => ({
+                    visit: `Visit ${index + 1}`,
+                    weight: visit.weight || null,
+                    date: visit.dateOfVisit ? new Date(visit.dateOfVisit).toLocaleDateString() : '',
+                  }))
+                  .filter(item => item.weight !== null && item.weight !== undefined);
+
+                return weightData.length > 1 ? (
+                  <Card className="shadow-sm hover:shadow-md transition-shadow ease-in-out duration-300">
+                    <CardHeader className="pb-2 sm:pb-4">
+                      <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                        <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5" />
+                        Weight Progression
+                      </CardTitle>
+                      <CardDescription className="text-xs sm:text-sm">
+                        Weight changes over visits
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="pt-2 sm:pt-4 px-0">
+                      <ChartContainer
+                        config={{
+                          weight: {
+                            label: "Weight (kg)",
+                            color: "hsl(var(--chart-1))",
+                          },
+                        }}
+                        className="h-[200px] sm:h-[250px] max-w-[calc(100%-24px)]"
+                      >
+                        <LineChart data={weightData}>
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis dataKey="visit" />
+                          <YAxis />
+                          <ChartTooltip
+                            cursor={false}
+                            content={<ChartTooltipContent />}
+                          />
+                          <Line
+                            type="monotone"
+                            dataKey="weight"
+                            stroke="var(--color-weight)"
+                            strokeWidth={2}
+                            dot={{ fill: "var(--color-weight)", strokeWidth: 2, r: 4 }}
+                          />
+                        </LineChart>
+                      </ChartContainer>
+                    </CardContent>
+                  </Card>
+                ) : null;
+              })()}
+
+              {/* Visit Frequency Chart */}
+              {(() => {
+                const visitsByMonth = patient.visits
+                  .slice()
+                  .reverse()
+                  .reduce((acc, visit) => {
+                    if (visit.dateOfVisit) {
+                      const date = new Date(visit.dateOfVisit);
+                      const monthYear = `${date.getMonth() + 1}/${date.getFullYear()}`;
+                      acc[monthYear] = (acc[monthYear] || 0) + 1;
+                    }
+                    return acc;
+                  }, {} as Record<string, number>);
+
+                const visitFrequencyData = Object.entries(visitsByMonth)
+                  .map(([month, visits]) => ({
+                    month,
+                    visits,
+                  }))
+                  .slice(-6); // Last 6 months
+
+                return visitFrequencyData.length > 1 ? (
+                  <Card className="shadow-sm hover:shadow-md transition-shadow ease-in-out duration-300">
+                    <CardHeader className="pb-2 sm:pb-4">
+                      <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                        <Calendar className="h-4 w-4 sm:h-5 sm:w-5" />
+                        Visit Frequency
+                      </CardTitle>
+                      <CardDescription className="text-xs sm:text-sm">
+                        Visits per month (last 6 months)
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="pt-2 sm:pt-4">
+                      <ChartContainer
+                        config={{
+                          visits: {
+                            label: "Visits",
+                            color: "hsl(var(--chart-2))",
+                          },
+                        }}
+                        className="h-[200px] sm:h-[250px]"
+                      >
+                        <BarChart data={visitFrequencyData}>
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis dataKey="month" />
+                          <YAxis />
+                          <ChartTooltip
+                            cursor={false}
+                            content={<ChartTooltipContent />}
+                          />
+                          <Bar
+                            dataKey="visits"
+                            fill="var(--color-visits)"
+                            maxBarSize={50}
+                          />
+                        </BarChart>
+                      </ChartContainer>
+                    </CardContent>
+                  </Card>
+                ) : null;
+              })()}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Edit Patient Modal */}
