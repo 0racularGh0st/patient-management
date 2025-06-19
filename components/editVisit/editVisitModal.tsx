@@ -134,7 +134,7 @@ export const EditVisitModal = ({ visit, patientId, visitIndex, isOpen, onClose, 
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="max-w-[calc(100%-32px)]" style={{ width: '800px' }}>
+            <DialogContent className="max-w-[calc(100%-32px)]" style={{ width: '800px', zIndex: 9999999, maxHeight: '100dvh', overflow: 'scroll' }}>
                 <DialogHeader>
                     <DialogTitle>Edit Visit Details</DialogTitle>
                     <DialogDescription>

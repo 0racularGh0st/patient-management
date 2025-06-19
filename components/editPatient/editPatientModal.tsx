@@ -133,7 +133,7 @@ export const EditPatientModal = ({ patient, isOpen, onClose, onSuccess }: EditPa
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="sm:max-w-[425px]">
+            <DialogContent className="sm:max-w-[425px]" style={{ zIndex: 9999999, maxHeight: '100dvh', overflow: 'scroll' }}>
                 <DialogHeader>
                     <DialogTitle>Edit Patient Details</DialogTitle>
                     <DialogDescription>

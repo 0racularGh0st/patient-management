@@ -23,7 +23,7 @@ const AddVisit = (props: { id: string, onSuccess: () => void}) => {
             <span className="text-[14px] font-semibold">Add Visit</span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-[calc(100%-32px)]" style={{ width : '800px' }}>
+      <DialogContent className="max-w-[calc(100%-32px)]" style={{ width: '800px', zIndex: 9999999, maxHeight: '100dvh', overflow: 'scroll' }}>
         <AddVisitForm setFormOpen={setFormOpen} id={id} onSuccess={onSuccess} />
       </DialogContent>
     </Dialog>
