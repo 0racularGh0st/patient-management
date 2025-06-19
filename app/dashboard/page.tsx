@@ -238,7 +238,7 @@ const Dashboard = () => {
                 Patient distribution by gender
               </CardDescription>
             </CardHeader>
-            <CardContent className="px-0 pt-2 sm:pt-6">
+            <CardContent className="p-0 pt-2 sm:pt-6">
               {maleFemaleCount !== null ? (
                 <ChartContainer
                   config={{
@@ -291,7 +291,7 @@ const Dashboard = () => {
                 Total patients vs returning patients
               </CardDescription>
             </CardHeader>
-            <CardContent className="px-0 pt-2 sm:pt-6">
+            <CardContent className="p-0 pt-2 sm:pt-6">
               {patientCount !== null && returningPatientsCount !== null ? (
                 <ChartContainer
                   config={{
@@ -341,7 +341,7 @@ const Dashboard = () => {
                     />
                     <Bar
                       dataKey="value"
-                      label={{ position: 'top', fontSize: 14, fill: 'var(--foreground)' }}
+                      label={{ position: 'center', fontSize: 14, fill: 'var(--foreground)', fontWeight: 'bold' }}
                       maxBarSize={50}
                     />
                   </BarChart>
@@ -365,7 +365,7 @@ const Dashboard = () => {
                 Average visits per patient
               </CardDescription>
             </CardHeader>
-            <CardContent className="px-0 pt-2 sm:pt-6">
+            <CardContent className="p-0 pt-2 sm:pt-6">
               {patientCount !== null && visitCount !== null ? (
                 <ChartContainer
                   config={{
@@ -405,7 +405,7 @@ const Dashboard = () => {
                     />
                     <Bar
                       dataKey="value"
-                      label={{ position: 'top', fontSize: 14, fill: 'var(--foreground)' }}
+                      label={{ position: 'center', fontSize: 14, fill: 'var(--foreground)', fontWeight: 'bold' }}
                       maxBarSize={50}
                     />
                   </BarChart>
@@ -495,7 +495,7 @@ const Dashboard = () => {
                     <Bar
                       dataKey="value"
                       fill="var(--color-0-18)"
-                      label={{ position: 'top', fontSize: 10, fill: 'var(--foreground)' }}
+                      label={{ position: 'center', fontSize: 12, fill: 'var(--foreground)', fontWeight: 'bold' }}
                       maxBarSize={50}
                     />
                   </BarChart>
