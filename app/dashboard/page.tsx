@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import ListByName from "@components/ListByName";
-import AddPatient from "@components/addPatient/addPatient";
 import {
   Command,
   CommandEmpty,
@@ -19,7 +18,7 @@ import {
 } from "@/components/ui/card";
 import useInput from "@utils/hooks/useInput";
 import useDebounce from "@utils/hooks/useDebounce";
-import { PatientStored } from "@components/addPatient/types";
+import { PatientStored } from "@app/add-patient/types";
 import { Loader2, UserPlusIcon } from "lucide-react";
 import { typographyClass } from "@utils/typographyClasses";
 import { Skeleton } from "@components/ui/skeleton";

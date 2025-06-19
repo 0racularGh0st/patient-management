@@ -3,7 +3,7 @@ import {
     NextRequest, NextResponse,
 } from 'next/server';
 import { getServerSession } from "next-auth/next"
-import { Patient as PatientType } from '@components/addPatient/types';
+import { Patient as PatientType } from '@app/add-patient/types';
 import { calculateDateOfBirth } from '@utils/helpers';
 import Patient from '@models/patient';
 
@@ -15,8 +15,8 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
             message: 'Unauthorized'
         })
     }
-    const { name, sex, age, address, phoneNo, complaint, provisionalDiagnosis, treatment, investigations, weight, dateOfVisit }: PatientType = await req.json();
-    const dob = calculateDateOfBirth(age);
+    const { name, sex, ageYears, ageMonths, address, phoneNo, complaint, provisionalDiagnosis, treatment, investigations, weight, dateOfVisit }: PatientType = await req.json();
+    const dob = calculateDateOfBirth(ageYears ?? 0, ageMonths ?? 0);
     try {
         await connectToDB();
         const newPatient = new Patient({

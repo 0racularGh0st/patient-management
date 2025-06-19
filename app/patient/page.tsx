@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { PatientStored } from "@components/addPatient/types";
+import { PatientStored } from "@app/add-patient/types";
 import { typographyClass } from "@utils/typographyClasses";
 import { Button } from "@components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -13,6 +13,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { calculateAgeFromDOB } from "@/utils/helpers";
 
 import AddVisit from "@components/addVisit/addVisit";
 const Patient = () => {
@@ -21,7 +22,8 @@ const Patient = () => {
   const id = searchParams.get("id");
   const [patient, setPatient] = useState<
     | (PatientStored & {
-        age: number;
+        ageYears: number;
+        ageMonths: number;
         lastWeight: number | string;
         lastVisit: string;
       })
@@ -39,9 +41,11 @@ const Patient = () => {
     const data = await res.json();
     if (data?.data) {
       const lastVisit = data.data?.visits?.[data.data?.visits?.length - 1];
+      const ageData = calculateAgeFromDOB(data.data.dob);
       setPatient({
         ...data.data,
-        age: new Date().getFullYear() - new Date(data.data.dob).getFullYear(),
+        ageYears: ageData.years,
+        ageMonths: ageData.months,
         lastWeight: lastVisit.weight || "-",
         lastVisit: formatDate(lastVisit.dateOfVisit) || "-",
         visits: data.data.visits?.reverse(),
@@ -120,21 +124,30 @@ const Patient = () => {
             </h3>
 
             {loaded ? (
-              <><p className={`${typographyClass["p"]} text-slate-500`}>
-                              <span className="font-semibold">Age:</span>{" "}
-                              {`${patient?.age || "-"} yrs`} |{" "}
-                              <span className="font-semibold">Sex:</span>{" "}
-                              {`${patient?.sex || "-"}`}
-                          </p><p className={`${typographyClass["p"]} text-slate-500`}>
-                                  <span className="font-semibold">Last visit:</span>{" "}
-                                  {`${patient?.lastVisit || "-"}`}
-                              </p><p className={`${typographyClass["p"]} text-slate-500`}>
-                                  <span className="font-semibold">Weight during last visit:</span>{" "}
-                                  {`${patient?.lastWeight || "-"} Kgs`}
-                              </p><p className={`${typographyClass["p"]} text-slate-500`}>
-                                  <span className="font-semibold">Phone No:</span>{" "}
-                                  {`${patient?.phoneNo || "-"}`}
-                              </p></>
+              <>
+                <p className={`${typographyClass["p"]} text-slate-500`}>
+                    <span className="font-semibold">Age:</span>{" "}
+                    {patient?.ageYears !== undefined && patient?.ageMonths !== undefined
+                      ? `${patient.ageYears} yrs ${patient.ageMonths} months`
+                      : "-"}
+                </p>
+                <p className={`${typographyClass["p"]} text-slate-500`}>
+                    <span className="font-semibold">Sex:</span>{" "}
+                    {`${patient?.sex || "-"}`}
+                </p>
+                <p className={`${typographyClass["p"]} text-slate-500`}>
+                        <span className="font-semibold">Last visit:</span>{" "}
+                        {`${patient?.lastVisit || "-"}`}
+                </p>
+                <p className={`${typographyClass["p"]} text-slate-500`}>
+                        <span className="font-semibold">Weight during last visit:</span>{" "}
+                        {`${patient?.lastWeight || "-"} Kgs`}
+                </p>
+                <p className={`${typographyClass["p"]} text-slate-500`}>
+                        <span className="font-semibold">Phone No:</span>{" "}
+                        {`${patient?.phoneNo || "-"}`}
+                </p>
+              </>
             ) : (
               <><Skeleton className="w-[180px] h-[16px] mb-1" /><Skeleton className="w-[220px] h-[16px] mb-1" /><Skeleton className="w-[160px] h-[16px] mb-1" /><Skeleton className="w-[200px] h-[16px] mb-1" /></>
             )}

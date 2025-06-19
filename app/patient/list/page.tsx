@@ -16,11 +16,12 @@ import {
     TableHeader,
     TableRow,
   } from "@/components/ui/table"
+import { calculateAgeFromDOB } from "@utils/helpers";
 const PatientList = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const letter = searchParams.get("letter");
-  const [patients, setPatients] = useState<Array<PatientStored & { age: number, lastWeight: number | string,lastVisit: string, noOfVisits: number}>>([]);
+  const [patients, setPatients] = useState<Array<PatientStored & { ageYears: number, ageMonths: number, lastWeight: number | string,lastVisit: string, noOfVisits: number}>>([]);
 
   const [loading, setLoading] = useState<boolean>(false);
   useEffect(() => {
@@ -37,9 +38,11 @@ const PatientList = () => {
     if (data?.data && data?.data?.length > 0) {
         const patients = data.data.map((patient: PatientStored) => {
             const lastVisit = patient?.visits?.[patient?.visits?.length - 1];
+            const ageData = calculateAgeFromDOB(patient.dob);
             return {
                 ...patient,
-                age: new Date().getFullYear() - new Date(patient.dob).getFullYear(),
+                ageYears: ageData.years,
+                ageMonths: ageData.months,
                 lastWeight: lastVisit.weight || "-",
                 lastVisit: lastVisit.dateOfVisit ? formatDate(lastVisit.dateOfVisit) : "-",
                 noOfVisits: patient.visits?.length || 0,
@@ -141,7 +144,7 @@ const PatientList = () => {
                         className="font-medium sticky left-0 bg-[hsl(var(--background))] cursor-pointer flex justify-start items-center gap-2 group"
                         onClick={() => router.push(`/patient?id=${patient._id}`)}
                     >{patient.name} <ExternalLink className="opacity-0 w-4 h4 group-hover:opacity-80 transition-opacity ease-in-out child-element duration-300"/></TableCell>
-                    <TableCell className="text-right">{patient.age}</TableCell>
+                    <TableCell className="text-right">{`${patient.ageYears}y ${patient.ageMonths}m`}</TableCell>
                     <TableCell>{patient.sex}</TableCell>
                     <TableCell className="text-right">{patient.lastVisit}</TableCell>
                     <TableCell className="text-right">{patient.lastWeight || '-'} Kgs</TableCell>

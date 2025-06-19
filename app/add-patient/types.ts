@@ -1,6 +1,7 @@
 export type Patient = {
     name: string;
-    age: number;
+    ageYears: number;
+    ageMonths: number;
     sex: string;
     complaint?: string | undefined;
     provisionalDiagnosis?: string | undefined;

@@ -39,7 +39,8 @@ const AddPatientForm = () => {
         ...resolver,
         defaultValues: {
             name: '',
-            age: undefined,
+            ageYears: undefined,
+            ageMonths: undefined,
             complaint: '',
             provisionalDiagnosis: '',
             treatment: '',
@@ -123,7 +124,7 @@ const AddPatientForm = () => {
                             control={form.control}
                             name="sex"
                             render={({ field }) => (
-                                <FormItem className="w-full sm:w-[calc(33%-8px)]">
+                                <FormItem className="w-full sm:w-[calc(25%-8px)]">
                                     <FormLabel className="font-semibold">Sex</FormLabel>
                                     <FormControl>
                                         <Select onValueChange={field.onChange} defaultValue={field.value}>
@@ -141,24 +142,36 @@ const AddPatientForm = () => {
                             )} />
                         <FormField
                             control={form.control}
-                            name="age"
+                            name="weight"
                             render={({ field }) => (
-                                <FormItem className="w-full sm:w-[calc(33%-8px)]">
-                                    <FormLabel className="font-semibold">Age</FormLabel>
+                                <FormItem className="w-full sm:w-[calc(25%-8px)]">
+                                    <FormLabel className="font-semibold">Weight (in Kgs)</FormLabel>
                                     <FormControl>
-                                        <Input onKeyDown={(event) => { if (event.key === 'Enter') event.preventDefault(); } } placeholder="Age" {...field} type="number" value={field.value || ''} />
+                                        <Input onKeyDown={(event) => { if (event.key === 'Enter') event.preventDefault(); } } placeholder="Weight" {...field} type="number" value={field.value || ''} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )} />
+                         <FormField
+                            control={form.control}
+                            name="ageYears"
+                            render={({ field }) => (
+                                <FormItem className="w-full sm:w-[calc(20%-8px)]">
+                                    <FormLabel className="font-semibold">Age (Years)</FormLabel>
+                                    <FormControl>
+                                        <Input onKeyDown={(event) => { if (event.key === 'Enter') event.preventDefault(); } } placeholder="Years" {...field} type="number" value={field.value || ''} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )} />
                         <FormField
                             control={form.control}
-                            name="weight"
+                            name="ageMonths"
                             render={({ field }) => (
-                                <FormItem className="w-full sm:w-[calc(33%-8px)]">
-                                    <FormLabel className="font-semibold">Weight (in Kgs)</FormLabel>
+                                <FormItem className="w-full sm:w-[calc(20%-8px)]">
+                                    <FormLabel className="font-semibold">Age (Months)</FormLabel>
                                     <FormControl>
-                                        <Input onKeyDown={(event) => { if (event.key === 'Enter') event.preventDefault(); } } placeholder="Weight" {...field} type="number" value={field.value || ''} />
+                                        <Input onKeyDown={(event) => { if (event.key === 'Enter') event.preventDefault(); } } placeholder="Months" {...field} type="number" value={field.value || ''} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
