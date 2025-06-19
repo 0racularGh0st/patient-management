@@ -1,12 +1,14 @@
 "use client";
-import { useEffect, useState } from "react";
-import { ArrowLeft } from "lucide-react";
+import { useEffect, useState, useCallback } from "react";
+import { ArrowLeft, PencilIcon } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { PatientStored } from "@app/add-patient/types";
-import { typographyClass } from "@utils/typographyClasses";
-import { Button } from "@components/ui/button";
+import { PatientStored } from "@/app/add-patient/types";
+import { typographyClass } from "@/utils/typographyClasses";
+import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
+import EditPatientModal from "@/components/editPatient/editPatientModal";
+
 import {
   Accordion,
   AccordionContent,
@@ -15,7 +17,7 @@ import {
 } from "@/components/ui/accordion";
 import { calculateAgeFromDOB } from "@/utils/helpers";
 
-import AddVisit from "@components/addVisit/addVisit";
+import AddVisit from "@/components/addVisit/addVisit";
 const Patient = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -30,13 +32,8 @@ const Patient = () => {
     | null
   >(null);
   const [loaded, setLoaded] = useState<boolean>(false);
-  useEffect(() => {
-    if (id) {
-      getPatientDetails(id);
-    }
-  }, [id]);
-
-  const getPatientDetails = async (id: string) => {
+  const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
+  const getPatientDetails = useCallback(async (id: string) => {
     const res = await fetch(`/api/patient?id=${id}`);
     const data = await res.json();
     if (data?.data) {
@@ -52,7 +49,13 @@ const Patient = () => {
       });
       setLoaded(true);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    if (id) {
+      getPatientDetails(id);
+    }
+  }, [id, getPatientDetails]);
 
   const formatDate = (date: string, withTime = true, withDay = true) => {
     const d = new Date(date);
@@ -95,10 +98,24 @@ const Patient = () => {
       getPatientDetails(id);
     }
   };
+
+  const handleEditClick = () => {
+    setIsEditModalOpen(true);
+  };
+
+  const handleEditModalClose = () => {
+    setIsEditModalOpen(false);
+  };
+
+  const handleEditSuccess = () => {
+    if (id) {
+      getPatientDetails(id);
+    }
+  };
   return (
     <div className="w-full max-w-[calc(100vw-32px)]">
       <Button
-        className="mb-1 mt-4 flex justify-start items-center gap-2 md:sticky md:top-[64px] text-slate-500"
+        className="mb-1 flex justify-start items-center gap-2 md:sticky md:top-[64px] text-slate-500"
         variant="ghost"
         onClick={() => router.back()}
       >
@@ -144,14 +161,26 @@ const Patient = () => {
                         {`${patient?.lastWeight || "-"} Kgs`}
                 </p>
                 <p className={`${typographyClass["p"]} text-slate-500`}>
+                        <span className="font-semibold">Address:</span>{" "}
+                        {`${patient?.address || "-"}`}
+                </p>
+                <p className={`${typographyClass["p"]} text-slate-500`}>
                         <span className="font-semibold">Phone No:</span>{" "}
                         {`${patient?.phoneNo || "-"}`}
                 </p>
               </>
             ) : (
-              <><Skeleton className="w-[180px] h-[16px] mb-1" /><Skeleton className="w-[220px] h-[16px] mb-1" /><Skeleton className="w-[160px] h-[16px] mb-1" /><Skeleton className="w-[200px] h-[16px] mb-1" /></>
+              <><Skeleton className="w-[180px] h-[16px] mb-1" /><Skeleton className="w-[220px] h-[16px] mb-1" /><Skeleton className="w-[160px] h-[16px] mb-1" /><Skeleton className="w-[200px] h-[16px] mb-1" /><Skeleton className="w-[190px] h-[16px] mb-1" /></>
             )}
-            
+            <Button
+                className="w-fit mt-2"
+                variant="outline"
+                onClick={handleEditClick}
+                disabled={!loaded}
+            >
+                <PencilIcon className="mr-[6px] w-[14px] h-[14px]" />
+                Edit
+            </Button>
           </div>
           <div className="flex flex-col md:w-[63%]">
             <div className="sticky top-[72px] bg-[hsl(var(--background))] z-10">
@@ -217,6 +246,23 @@ const Patient = () => {
           </div>
         </div>
       </div>
+
+      {/* Edit Patient Modal */}
+      {patient && (
+        <EditPatientModal
+          patient={{
+            _id: patient._id,
+            name: patient.name,
+            ageYears: patient.ageYears,
+            ageMonths: patient.ageMonths,
+            address: patient.address,
+            phoneNo: patient.phoneNo,
+          }}
+          isOpen={isEditModalOpen}
+          onClose={handleEditModalClose}
+          onSuccess={handleEditSuccess}
+        />
+      )}
     </div>
   );
 };

@@ -3,7 +3,7 @@ import {
     NextRequest, NextResponse,
 } from 'next/server';
 import { getServerSession } from "next-auth/next"
-import { Visit as VisitType } from '@components/addPatient/types';
+import { Visit as VisitType } from "@app/add-patient/types";
 import Patient from '@models/patient';
 
 export const PATCH = async (req: NextRequest, res: NextResponse) => {
