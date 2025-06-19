@@ -43,9 +43,12 @@ const Dashboard = () => {
     female?: number;
   } | null>(null);
   const [ageGroups, setAgeGroups] = useState<{
-    '0-18': number;
-    '19-35': number;
-    '36-50': number;
+    '0-2': number;
+    '3-12': number;
+    '13-19': number;
+    '20-30': number;
+    '31-40': number;
+    '41-50': number;
     '51-65': number;
     '65+': number;
   } | null>(null);
@@ -433,25 +436,37 @@ const Dashboard = () => {
               {ageGroups !== null ? (
                 <ChartContainer
                   config={{
-                    '0-18': {
-                      label: "0-18 years",
+                    '0-2': {
+                      label: "0-2 years",
                       color: "hsl(var(--chart-1))",
                     },
-                    '19-35': {
-                      label: "19-35 years",
+                    '3-12': {
+                      label: "3-12 years",
                       color: "hsl(var(--chart-2))",
                     },
-                    '36-50': {
-                      label: "36-50 years",
+                    '13-19': {
+                      label: "13-19 years",
                       color: "hsl(var(--chart-3))",
+                    },
+                    '20-30': {
+                      label: "20-30 years",
+                      color: "hsl(var(--chart-4))",
+                    },
+                    '31-40': {
+                      label: "31-40 years",
+                      color: "hsl(var(--chart-5))",
+                    },
+                    '41-50': {
+                      label: "41-50 years",
+                      color: "hsl(var(--chart-1))",
                     },
                     '51-65': {
                       label: "51-65 years",
-                      color: "hsl(var(--chart-4))",
+                      color: "hsl(var(--chart-2))",
                     },
                     '65+': {
                       label: "65+ years",
-                      color: "hsl(var(--chart-5))",
+                      color: "hsl(var(--chart-3))",
                     },
                   }}
                   className="h-[200px] sm:h-[250px]"
@@ -459,19 +474,34 @@ const Dashboard = () => {
                   <BarChart
                     data={[
                       {
-                        category: "0-18",
-                        value: ageGroups['0-18'],
-                        label: "0-18 years",
+                        category: "0-2",
+                        value: ageGroups['0-2'],
+                        label: "0-2 years",
                       },
                       {
-                        category: "19-35",
-                        value: ageGroups['19-35'],
-                        label: "19-35 years",
+                        category: "3-12",
+                        value: ageGroups['3-12'],
+                        label: "3-12 years",
                       },
                       {
-                        category: "36-50",
-                        value: ageGroups['36-50'],
-                        label: "36-50 years",
+                        category: "13-19",
+                        value: ageGroups['13-19'],
+                        label: "13-19 years",
+                      },
+                      {
+                        category: "20-30",
+                        value: ageGroups['20-30'],
+                        label: "20-30 years",
+                      },
+                      {
+                        category: "31-40",
+                        value: ageGroups['31-40'],
+                        label: "31-40 years",
+                      },
+                      {
+                        category: "41-50",
+                        value: ageGroups['41-50'],
+                        label: "41-50 years",
                       },
                       {
                         category: "51-65",
@@ -494,7 +524,7 @@ const Dashboard = () => {
                     />
                     <Bar
                       dataKey="value"
-                      fill="var(--color-0-18)"
+                      fill="var(--color-0-2)"
                       label={{ position: 'center', fontSize: 12, fill: 'var(--foreground)', fontWeight: 'bold' }}
                       maxBarSize={50}
                     />

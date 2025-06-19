@@ -435,7 +435,7 @@ const Patient = () => {
                         Visits per month (last 6 months)
                       </CardDescription>
                     </CardHeader>
-                    <CardContent className="pt-2 sm:pt-4">
+                    <CardContent className="pt-2 sm:pt-4 px-0">
                       <ChartContainer
                         config={{
                           visits: {
@@ -443,7 +443,7 @@ const Patient = () => {
                             color: "hsl(var(--chart-2))",
                           },
                         }}
-                        className="h-[200px] sm:h-[250px]"
+                        className="h-[200px] sm:h-[250px] max-w-[calc(100%-24px)]"
                       >
                         <BarChart data={visitFrequencyData}>
                           <CartesianGrid strokeDasharray="3 3" />

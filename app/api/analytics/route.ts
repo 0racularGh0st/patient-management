@@ -19,23 +19,29 @@ export const GET = async (req: NextRequest) => {
         const patients = await Patient.find({}, { dob: 1, sex: 1, visits: 1 });
         
         const ageGroups = {
-            '0-18': 0,
-            '19-35': 0,
-            '36-50': 0,
+            '0-2': 0,
+            '3-12': 0,
+            '13-19': 0,
+            '20-30': 0,
+            '31-40': 0,
+            '41-50': 0,
             '51-65': 0,
             '65+': 0
         };
 
         const currentDate = new Date();
-        
+
         patients.forEach(patient => {
             if (patient.dob) {
                 const birthDate = new Date(patient.dob);
                 const age = currentDate.getFullYear() - birthDate.getFullYear();
-                
-                if (age <= 18) ageGroups['0-18']++;
-                else if (age <= 35) ageGroups['19-35']++;
-                else if (age <= 50) ageGroups['36-50']++;
+
+                if (age <= 2) ageGroups['0-2']++;
+                else if (age <= 12) ageGroups['3-12']++;
+                else if (age <= 19) ageGroups['13-19']++;
+                else if (age <= 30) ageGroups['20-30']++;
+                else if (age <= 40) ageGroups['31-40']++;
+                else if (age <= 50) ageGroups['41-50']++;
                 else if (age <= 65) ageGroups['51-65']++;
                 else ageGroups['65+']++;
             }
