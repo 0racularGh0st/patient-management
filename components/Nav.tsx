@@ -1,7 +1,7 @@
 "use client";
 import Image from 'next/image'
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react'
+import { useRouter, usePathname } from 'next/navigation';
+import { useEffect, useRef } from 'react'
 import Logo from '@assets/images/patientmgmt.png'
 import GoogleIcon from '../assets/icons/google.svg'
 import {  ArrowLeftOnRectangleIcon, UserCircleIcon } from '@heroicons/react/20/solid'
@@ -17,6 +17,8 @@ import {
 export const Nav = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const pathname = usePathname();
+  const hasRedirected = useRef(false);
   const Spinner = () => {
     return (<div
       className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] text-slate-400"
@@ -30,21 +32,28 @@ export const Nav = () => {
 
 
   useEffect(() => {
-    console.log('status ->', status,)
-    console.log('session ->', session)
-    if (status === 'authenticated' && session?.user) {
-      if(window.location.pathname === '/') {
-        router.push('/dashboard');
-      }
-      return;
-    }
+    // Prevent redirect loops and only redirect once per session change
+    if (status === 'loading' || hasRedirected.current) return;
 
-    if (status === 'unauthenticated' && !session) {
-      if(window.location.pathname !== '/') {
-        router.push('/')
+    if (status === 'authenticated' && session?.user) {
+      if (pathname === '/') {
+        hasRedirected.current = true;
+        router.replace('/dashboard');
+      }
+    } else if (status === 'unauthenticated') {
+      if (pathname !== '/') {
+        hasRedirected.current = true;
+        router.replace('/');
       }
     }
-  }, [status, session, router])
+  }, [status, session, pathname, router]);
+
+  // Reset redirect flag when status changes
+  useEffect(() => {
+    if (status !== 'loading') {
+      hasRedirected.current = false;
+    }
+  }, [status]);
   const handleSignout = () => {
     signOut().then(() => {
       router.push('/');

@@ -10,13 +10,25 @@ const handler = NextAuth({
             clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
         })
     ],
+    pages: {
+        signIn: '/',
+        error: '/',
+    },
     callbacks: {
         async session({ session }: { session: any }) {
-            const sessionUser = await User.findOne({ email: session.user.email });
-    
-            session.user.id = sessionUser._id.toString();
-    
-            return session;
+            try {
+                await connectToDB();
+                const sessionUser = await User.findOne({ email: session.user.email });
+
+                if (sessionUser) {
+                    session.user.id = sessionUser._id.toString();
+                }
+
+                return session;
+            } catch (error) {
+                console.error('Session callback error:', error);
+                return session;
+            }
         },
         async signIn({ profile }) {
             try {
@@ -27,16 +39,45 @@ const handler = NextAuth({
                 await connectToDB();
                 const userExists = await User.findOne({ email: profile?.email || '' })
                 if (!userExists) {
-                    await User.create({ email: profile?.email, username: profile?.name?.replace(' ', '').toLowerCase()})
+                    await User.create({
+                        email: profile?.email,
+                        username: profile?.name?.replace(' ', '').toLowerCase()
+                    })
                 }
                 return true;
             }
             catch (error) {
-                console.log(error)
+                console.log('SignIn callback error:', error)
                 return false;
             }
+        },
+        async redirect({ url, baseUrl }) {
+            // Allows relative callback URLs
+            if (url.startsWith("/")) return `${baseUrl}${url}`
+            // Allows callback URLs on the same origin
+            else if (new URL(url).origin === baseUrl) return url
+            return baseUrl + '/dashboard'
         }
-    }
+    },
+    session: {
+        strategy: 'jwt',
+        maxAge: 30 * 24 * 60 * 60, // 30 days
+        updateAge: 24 * 60 * 60, // 24 hours
+    },
+    cookies: {
+        sessionToken: {
+            name: `next-auth.session-token`,
+            options: {
+                httpOnly: true,
+                sameSite: 'lax',
+                path: '/',
+                secure: process.env.NODE_ENV === 'production',
+            }
+        },
+    },
+    jwt: {
+        maxAge: 30 * 24 * 60 * 60, // 30 days
+    },
 })
 
 export { handler as GET, handler as POST };

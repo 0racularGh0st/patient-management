@@ -263,8 +263,8 @@ const Dashboard = () => {
                     />
                     <Pie
                       data={[
-                        { name: "Male", value: maleFemaleCount.male || 0, fill: "var(--color-male)" },
-                        { name: "Female", value: maleFemaleCount.female || 0, fill: "var(--color-female)" },
+                        { name: "Male", value: maleFemaleCount?.male || 0, fill: "var(--color-male)" },
+                        { name: "Female", value: maleFemaleCount?.female || 0, fill: "var(--color-female)" },
                       ]}
                       dataKey="value"
                       nameKey="name"
