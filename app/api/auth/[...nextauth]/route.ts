@@ -32,7 +32,6 @@ const handler = NextAuth({
                 if (sessionUser) {
                     session.user.id = sessionUser._id.toString();
                 }
-
                 return session;
             } catch (error) {
                 console.error('Session callback error:', error);
