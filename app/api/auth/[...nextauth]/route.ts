@@ -14,6 +14,7 @@ const handler = NextAuth({
         signIn: '/',
         error: '/',
     },
+    secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
         async session({ session }: { session: any }) {
             try {
@@ -71,7 +72,60 @@ const handler = NextAuth({
                 httpOnly: true,
                 sameSite: 'lax',
                 path: '/',
-                secure: process.env.NODE_ENV === 'production',
+                secure: true, // Always use secure cookies in production
+                domain: process.env.NODE_ENV === 'production' ? process.env.NEXTAUTH_URL?.replace('https://', '').replace('http://', '') : undefined,
+            }
+        },
+        callbackUrl: {
+            name: `next-auth.callback-url`,
+            options: {
+                httpOnly: true,
+                sameSite: 'lax',
+                path: '/',
+                secure: true,
+                domain: process.env.NODE_ENV === 'production' ? process.env.NEXTAUTH_URL?.replace('https://', '').replace('http://', '') : undefined,
+            }
+        },
+        csrfToken: {
+            name: `next-auth.csrf-token`,
+            options: {
+                httpOnly: true,
+                sameSite: 'lax',
+                path: '/',
+                secure: true,
+                domain: process.env.NODE_ENV === 'production' ? process.env.NEXTAUTH_URL?.replace('https://', '').replace('http://', '') : undefined,
+            }
+        },
+        pkceCodeVerifier: {
+            name: `next-auth.pkce.code_verifier`,
+            options: {
+                httpOnly: true,
+                sameSite: 'lax',
+                path: '/',
+                secure: true,
+                maxAge: 60 * 15, // 15 minutes
+                domain: process.env.NODE_ENV === 'production' ? process.env.NEXTAUTH_URL?.replace('https://', '').replace('http://', '') : undefined,
+            }
+        },
+        state: {
+            name: `next-auth.state`,
+            options: {
+                httpOnly: true,
+                sameSite: 'lax',
+                path: '/',
+                secure: true,
+                maxAge: 60 * 15, // 15 minutes
+                domain: process.env.NODE_ENV === 'production' ? process.env.NEXTAUTH_URL?.replace('https://', '').replace('http://', '') : undefined,
+            }
+        },
+        nonce: {
+            name: `next-auth.nonce`,
+            options: {
+                httpOnly: true,
+                sameSite: 'lax',
+                path: '/',
+                secure: true,
+                domain: process.env.NODE_ENV === 'production' ? process.env.NEXTAUTH_URL?.replace('https://', '').replace('http://', '') : undefined,
             }
         },
     },
