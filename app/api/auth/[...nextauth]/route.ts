@@ -1,7 +1,5 @@
-import { connectToDB } from "@utils/database";
-import NextAuth, { NextAuthOptions } from "next-auth";
+import NextAuth from "next-auth";
 import GoogleProvider from 'next-auth/providers/google';
-import User from "@models/user";
 
 const handler = NextAuth({
     providers: [
@@ -16,34 +14,39 @@ const handler = NextAuth({
     },
     secret: process.env.NEXTAUTH_SECRET,
     debug: process.env.NODE_ENV === 'development',
+    session: {
+        strategy: 'jwt',
+        maxAge: 30 * 24 * 60 * 60, // 30 days
+    },
     callbacks: {
-        async session({ session }: { session: any }) {
-            try {
-                await connectToDB();
-                const sessionUser = await User.findOne({ email: session.user.email });
-
-                if (sessionUser) {
-                    session.user.id = sessionUser._id.toString();
+        async jwt({ token, profile }: any) {
+            // Check if user is allowed during JWT creation
+            if (profile) {
+                const allowedUsers = process.env.ALLOWED_USERS?.split(',');
+                if (!allowedUsers?.includes(profile.email?.toLowerCase() || '')) {
+                    throw new Error('User not allowed');
                 }
-                return session;
-            } catch (error) {
-                console.error('Session callback error:', error);
-                return session;
+                token.email = profile.email;
+                token.name = profile.name;
+                token.picture = profile.picture;
             }
+            return token;
+        },
+        async session({ session, token }: any) {
+            // Pass token data to session
+            if (token && session.user) {
+                session.user.email = token.email;
+                session.user.name = token.name;
+                session.user.image = token.picture;
+                session.user.id = token.sub;
+            }
+            return session;
         },
         async signIn({ profile }) {
             try {
                 const allowedUsers = process.env.ALLOWED_USERS?.split(',');
                 if (!allowedUsers?.includes(profile?.email?.toLowerCase() || '')) {
                     return false;
-                }
-                await connectToDB();
-                const userExists = await User.findOne({ email: profile?.email || '' })
-                if (!userExists) {
-                    await User.create({
-                        email: profile?.email,
-                        username: profile?.name?.replace(' ', '').toLowerCase()
-                    })
                 }
                 return true;
             }
@@ -60,22 +63,8 @@ const handler = NextAuth({
             return `${baseUrl}/dashboard`
         }
     },
-    session: {
-        strategy: 'jwt',
-        maxAge: 30 * 24 * 60 * 60, // 30 days
-    },
-    useSecureCookies: process.env.NODE_ENV === 'production',
-    cookies: {
-        sessionToken: {
-            name: `next-auth.session-token`,
-            options: {
-                httpOnly: true,
-                sameSite: 'lax',
-                path: '/',
-                secure: process.env.NODE_ENV === 'production',
-            }
-        },
-    },
+    // Disable all cookies except essential ones
+    cookies: {},
 })
 
 export { handler as GET, handler as POST };
