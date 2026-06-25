@@ -1,7 +1,6 @@
 "use client";
 import Image from 'next/image'
-import { useRouter, usePathname } from 'next/navigation';
-import { useEffect, useRef } from 'react'
+import { useRouter } from 'next/navigation';
 import Logo from '@assets/images/patientmgmt.png'
 import GoogleIcon from '../assets/icons/google.svg'
 import {  ArrowLeftOnRectangleIcon, UserCircleIcon } from '@heroicons/react/20/solid'
@@ -15,10 +14,8 @@ import {
   MenubarTrigger,
 } from "./ui/menubar"
 export const Nav = () => {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const router = useRouter();
-  const pathname = usePathname();
-  const hasRedirected = useRef(false);
   const Spinner = () => {
     return (<div
       className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] text-slate-400"
@@ -30,30 +27,8 @@ export const Nav = () => {
     </div>)
   };
 
-
-  useEffect(() => {
-    // Prevent redirect loops and only redirect once per session change
-    if (status === 'loading' || hasRedirected.current) return;
-
-    if (status === 'authenticated' && session?.user) {
-      if (pathname === '/') {
-        hasRedirected.current = true;
-        router.replace('/dashboard');
-      }
-    } else if (status === 'unauthenticated') {
-      if (pathname !== '/') {
-        hasRedirected.current = true;
-        router.replace('/');
-      }
-    }
-  }, [status, session, pathname, router]);
-
-  // Reset redirect flag when status changes
-  useEffect(() => {
-    if (status !== 'loading') {
-      hasRedirected.current = false;
-    }
-  }, [status]);
+  // Auth-based routing lives in proxy.ts (server-side), not here. Keeping
+  // it out of this client component is what prevents the focus-refetch flicker.
   const handleSignout = () => {
     signOut().then(() => {
       router.push('/');

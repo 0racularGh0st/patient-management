@@ -2,12 +2,12 @@ import { connectToDB } from '@utils/database';
 import {
     NextRequest, NextResponse,
 } from 'next/server';
-import { getServerSession } from "next-auth/next"
+import { auth } from "@/auth"
 import { Visit as VisitType } from "@app/add-patient/types";
 import Patient from '@models/patient';
 
-export const PATCH = async (req: NextRequest, res: NextResponse) => {
-    const session = await getServerSession();
+export const PATCH = async (req: NextRequest) => {
+    const session = await auth();
     if (!session) {
         return NextResponse.json({
             code: 401,
