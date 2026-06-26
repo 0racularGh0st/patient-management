@@ -26,7 +26,6 @@ import useInput from "@/utils/hooks/useInput";
 import useDebounce from "@/utils/hooks/useDebounce";
 import { PatientStored } from "@/app/add-patient/types";
 import { Loader2, UserPlusIcon, TrendingUp, Users, Activity } from "lucide-react";
-import { typographyClass } from "@/utils/typographyClasses";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
@@ -104,44 +103,78 @@ const Dashboard = () => {
   }
   return (
     <div>
-      <div className="p-3 sm:p-9 flex flex-col sm:flex-row sm:justify-center items-center sm:items-start gap-10 flex-wrap m-auto w-full max-w-[calc(100%-24px)]">
-        <Button
-        type='button'
-        onClick={() => router.push('/add-patient')}
-        className="shadow-sm hover:shadow-md transition-shadow duration-200 ease-in-out"
-        >
-            <UserPlusIcon width={20} height={20} className='mr-2' />
-            <p className={typographyClass['p']}>Add patient</p>
-        </Button>
-        <Command
-          className="w-72 max-w-[calc(100vw-32px) rounded-lg border shadow-sm"
-          onChange={setKeyword}
-          value={keyword}
-        >
-          <CommandInput placeholder="Search by name..." className="h-[40px]" />
-          <CommandList className="relative">
-            {debouncedKeyword.length > 2 && patients.length === 0 && (
-              <CommandEmpty>No patients found!</CommandEmpty>
-            )}
-            {searching && (
-              <div className="flex justify-center p-1 z-1 absolute w-[100%] overflow-hidden">
-                <Loader2 className="w-6 h-6 animate-spin text-slate-500" />
-              </div>
-            )}
-            {patients &&
-              patients.length > 0 &&
-              patients.map((patient, index) => (
-                <CommandItem
-                  key={index}
-                  className="cursor-pointer hover:text-accent-foreground hover:bg-accent"
-                  onSelect={() => handlePatientSelect(patient._id)}
-                >
-                  {patient.name}
-                </CommandItem>
-              ))}
-          </CommandList>
-        </Command>
-        <ListByName />
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-8 pt-8">
+        {/* Header */}
+        <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <span className="eyebrow">Overview</span>
+            <h1 className="mt-2 font-serif text-4xl font-semibold tracking-tight sm:text-5xl">Dashboard</h1>
+          </div>
+          <Button type="button" size="lg" onClick={() => router.push('/add-patient')}>
+            <UserPlusIcon width={18} height={18} />
+            Add patient
+          </Button>
+        </div>
+
+        {/* Stat strip */}
+        <div className="mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-xl border bg-border elevate lg:grid-cols-4">
+          {[
+            { label: 'Patients', value: patientCount },
+            { label: 'Total visits', value: visitCount },
+            { label: 'Returning', value: returningPatientsCount },
+            {
+              label: 'Avg visits / patient',
+              value: patientCount && visitCount != null ? (visitCount / patientCount).toFixed(1) : null,
+            },
+          ].map((s) => (
+            <div key={s.label} className="bg-card p-5 sm:p-6">
+              <div className="eyebrow">{s.label}</div>
+              {s.value === null || s.value === undefined ? (
+                <Skeleton className="mt-3 h-9 w-16" />
+              ) : (
+                <div className="mt-1.5 font-serif text-4xl font-semibold tnum text-foreground sm:text-[2.6rem]">
+                  {typeof s.value === 'number' ? s.value.toLocaleString() : s.value}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Search + browse */}
+        <div className="mt-10 flex flex-col gap-8 lg:flex-row lg:items-start">
+          <div className="w-full lg:max-w-md">
+            <span className="eyebrow">Find a patient</span>
+            <Command
+              className="mt-3 w-full overflow-visible rounded-xl border bg-card elevate"
+              onChange={setKeyword}
+              value={keyword}
+            >
+              <CommandInput placeholder="Search by name..." className="h-11" />
+              <CommandList className="relative">
+                {debouncedKeyword.length > 2 && patients.length === 0 && (
+                  <CommandEmpty>No patients found!</CommandEmpty>
+                )}
+                {searching && (
+                  <div className="absolute flex w-full justify-center overflow-hidden p-2">
+                    <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+                  </div>
+                )}
+                {patients &&
+                  patients.length > 0 &&
+                  patients.map((patient, index) => (
+                    <CommandItem
+                      key={index}
+                      className="cursor-pointer"
+                      onSelect={() => handlePatientSelect(patient._id)}
+                    >
+                      {patient.name}
+                    </CommandItem>
+                  ))}
+              </CommandList>
+            </Command>
+          </div>
+          <ListByName />
+        </div>
       </div>
       {/* <div className="p-4 sm:p-9 flex flex-col sm:flex-row sm:justify-center items-center sm:items-start gap-12 min-h-[400px] flex-wrap m-auto w-full">
         <Card className="w-[220px] shadow-sm hover:shadow-md transition-shadow ease-in-out duration-300">
@@ -224,12 +257,15 @@ const Dashboard = () => {
       </div> */}
 
       {/* Analytics Charts Section */}
-      <div className="pb-10">
-        <h2 className={`${typographyClass["h2"]} text-xl sm:text-2xl mb-4 sm:mb-6 text-center`}>
-          Analytics Dashboard
-        </h2>
+      <div className="pb-16 pt-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-8">
+          <span className="eyebrow">Analytics</span>
+          <h2 className="mb-6 mt-2 font-serif text-3xl font-semibold tracking-tight sm:text-4xl">
+            At a glance
+          </h2>
+        </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 lg:gap-8 max-w-7xl mx-auto overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8 max-w-7xl mx-auto px-4 sm:px-8 overflow-hidden">
           {/* Gender Distribution Pie Chart */}
           <Card className="shadow-sm hover:shadow-md transition-shadow ease-in-out duration-300 w-full max-w-full overflow-hidden">
             <CardHeader className="pb-2 sm:pb-6">

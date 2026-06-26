@@ -163,22 +163,23 @@ const Patient = () => {
     }
   };
   return (
-    <div className="w-full max-w-[calc(100vw-32px)] pb-10">
+    <div className="mx-auto w-full max-w-5xl px-4 pt-6 pb-10 sm:px-8">
       <Button
-        className="mb-1 flex justify-start items-center gap-2 md:sticky md:top-[64px] text-slate-500 bg-[hsl(var(--background))]"
+        className="mb-1 flex justify-start items-center gap-2 md:sticky md:top-[64px] text-muted-foreground bg-[hsl(var(--background))]"
         variant="ghost"
         onClick={() => router.back()}
       >
         <ArrowLeft />
         Back
       </Button>
-      <h3
-        className={`${typographyClass["h3"]} text-4xl text-center mb-8 text-slate-500`}
-      >
-        Patient Details
-        <Separator className="mt-2" />
-      </h3>
-      <div className="m-auto flex flex-col gap-6 w-[900px] max-w-[calc(100vw-32px)]">
+      <div className="mb-8">
+        <span className="eyebrow">Patient record</span>
+        <h3 className={`${typographyClass["h3"]} mt-2 text-4xl`}>
+          Patient Details
+        </h3>
+        <Separator className="mt-3" />
+      </div>
+      <div className="flex flex-col gap-6 w-full">
         <div className="flex gap-10 flex-col md:flex-row md:justify-between md:items-start">
           <div className="flex flex-col md:w-[37%] md:sticky md:top-[120px]">
             <h3 className={`${typographyClass["h3"]} text-3xl w-max`}>
@@ -192,29 +193,29 @@ const Patient = () => {
 
             {loaded ? (
               <>
-                <p className={`${typographyClass["p"]} text-slate-500`}>
+                <p className={`${typographyClass["p"]} text-muted-foreground`}>
                     <span className="font-semibold">Age:</span>{" "}
                     {patient?.ageYears !== undefined && patient?.ageMonths !== undefined
                       ? `${patient.ageYears} yrs ${patient.ageMonths} months`
                       : "-"}
                 </p>
-                <p className={`${typographyClass["p"]} text-slate-500`}>
+                <p className={`${typographyClass["p"]} text-muted-foreground`}>
                     <span className="font-semibold">Sex:</span>{" "}
                     {`${patient?.sex || "-"}`}
                 </p>
-                <p className={`${typographyClass["p"]} text-slate-500`}>
+                <p className={`${typographyClass["p"]} text-muted-foreground`}>
                         <span className="font-semibold">Last visit:</span>{" "}
                         {`${patient?.lastVisit || "-"}`}
                 </p>
-                <p className={`${typographyClass["p"]} text-slate-500`}>
+                <p className={`${typographyClass["p"]} text-muted-foreground`}>
                         <span className="font-semibold">Weight during last visit:</span>{" "}
                         {`${patient?.lastWeight || "-"} Kgs`}
                 </p>
-                <p className={`${typographyClass["p"]} text-slate-500`}>
+                <p className={`${typographyClass["p"]} text-muted-foreground`}>
                         <span className="font-semibold">Address:</span>{" "}
                         {`${patient?.address || "-"}`}
                 </p>
-                <p className={`${typographyClass["p"]} text-slate-500`}>
+                <p className={`${typographyClass["p"]} text-muted-foreground`}>
                         <span className="font-semibold">Phone No:</span>{" "}
                         {`${patient?.phoneNo || "-"}`}
                 </p>
@@ -240,7 +241,7 @@ const Patient = () => {
                   className={`${typographyClass["h4"]} text-2xl w-max m-auto`}
                 >
                   Visits{" "}
-                  <span className="text-slate-500">{`(${
+                  <span className="text-muted-foreground">{`(${
                     patient?.visits?.length || 0
                   })`}</span>
                 </h3>
@@ -254,7 +255,7 @@ const Patient = () => {
                   <AccordionTrigger className="opacity-75 hover:no-underline group">
                     <div className="flex justify-between items-center w-full pr-4">
                       <p>
-                        <span className="font-semibold text-slate-500">
+                        <span className="font-semibold text-muted-foreground">
                           Visit Date:{" "}
                         </span>
                         {formatDate(visit.dateOfVisit || "", false, false)}
@@ -273,7 +274,7 @@ const Patient = () => {
                     </div>
                   </AccordionTrigger>
                   <AccordionContent>
-                    <div className="flex flex-col gap-1 text-slate-500 text-[16px]">
+                    <div className="flex flex-col gap-1 text-muted-foreground text-[16px]">
                       <p>
                         <span className="font-semibold ">Complaint: </span>
                         {visit?.complaint?.split(/\n/g).map((line, index) => <span key={`${index}-complaint`}>{line}<br /></span>) || "N/A"}

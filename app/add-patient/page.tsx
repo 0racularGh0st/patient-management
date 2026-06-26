@@ -92,9 +92,9 @@ const AddPatientForm = () => {
         }
     }
     return (
-        <div className="flex flex-col gap-8 mt-2 w-[800px] pb-12 max-w-[calc(100vw-32px)]">
+        <div className="mx-auto flex w-full max-w-[820px] flex-col gap-8 px-4 pb-12 pt-6 sm:px-8">
         <Button
-            className="mb-1 mt-4 flex justify-start items-center gap-2 md:sticky md:top-[64px] text-slate-500 w-fit"
+            className="mb-1 mt-4 flex justify-start items-center gap-2 md:sticky md:top-[64px] text-muted-foreground w-fit"
             variant="ghost"
             onClick={() => router.push("/dashboard")}
         >

@@ -37,3 +37,6 @@ next-env.d.ts
 .env
 # Claude Code local settings (machine-specific)
 .claude/settings.local.json
+
+# Local theme backups (not committed)
+theme-backups/

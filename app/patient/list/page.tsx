@@ -94,9 +94,9 @@ const PatientList = () => {
   const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 
   return (
-    <div className="w-full max-w-[calc(100vw-32px)]">
+    <div className="mx-auto w-full max-w-7xl px-4 pt-6 sm:px-8">
       <Button
-        className="mb-1 mt-4 flex justify-start items-center gap-2 md:sticky md:top-[64px] text-slate-500"
+        className="mb-1 mt-4 flex justify-start items-center gap-2 md:sticky md:top-[64px] text-muted-foreground"
         variant="ghost"
         onClick={() => router.push('/dashboard')}
       >
@@ -104,7 +104,7 @@ const PatientList = () => {
         Back
       </Button>
       <h3
-        className={`${typographyClass["h3"]} text-4xl text-center mb-8 text-slate-500`}
+        className={`${typographyClass["h3"]} text-4xl text-center mb-8 text-muted-foreground`}
       >
         {`Patient List: '${letter?.toUpperCase()}'`}
         <Separator className="mt-2" />
@@ -157,11 +157,11 @@ const PatientList = () => {
         </Table>
         {!loading && patients.length === 0 && (
                 <div>
-                    <p className="text-center text-md text-slate-500 mt-6">No patients found!</p>
+                    <p className="text-center text-md text-muted-foreground mt-6">No patients found!</p>
                 </div>
         )}
         {loading && <div className="w-full flex justify-center mt-6">
-            <Loader2 className="w-6 h-6 animate-spin text-slate-500" />
+            <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
             </div>}
     </div>
   );

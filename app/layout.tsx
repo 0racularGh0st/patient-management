@@ -1,13 +1,24 @@
 import './globals.scss'
 import type { Metadata } from 'next'
-import { Inter, Quicksand } from 'next/font/google'
+import { Fraunces, Hanken_Grotesk } from 'next/font/google'
 import Nav from '@components/Nav'
 import AuthProvider from '@utils/authProvider'
 import { ContentLayout } from '@components/contentLayout'
 import { ThemeProvider } from '@components/theme-provider'
 import { Toaster } from "@/components/ui/toaster"
 
-const quicksand = Quicksand({ subsets: ['latin'] })
+// Editorial pairing: Fraunces (optical serif) for display, Hanken Grotesk for UI/body.
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  variable: '--font-fraunces',
+  style: ['normal', 'italic'],
+  display: 'swap',
+})
+const hanken = Hanken_Grotesk({
+  subsets: ['latin'],
+  variable: '--font-hanken',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   title: 'Patient Manager',
@@ -20,33 +31,23 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={`${hanken.variable} ${fraunces.variable}`}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
       </head>
-      <body className={quicksand.className}>
-        <main>
-        <div className='background-elements'>
-          <div className='circle1'/>
-          <div className='circle2'/>
-          <div className='circle3'/>
-          <div className='circle4'/>
-          <div className='circle5'/>
-          <div className='circle6'/>
-          <div className='background-back'/>
-        </div>
-          <ThemeProvider attribute='class' defaultTheme="light">
-            <AuthProvider>
+      <body>
+        <ThemeProvider attribute='class' defaultTheme="light">
+          <AuthProvider>
+            <div className="page-shell">
               <Nav />
               <ContentLayout>
                 {children}
               </ContentLayout>
-            </AuthProvider>
-          </ThemeProvider>
-        </main>
+            </div>
+          </AuthProvider>
+        </ThemeProvider>
         <Toaster />
       </body>
     </html>
   )
 }
-
